@@ -23,13 +23,13 @@
     body { background-color: var(--bg-color); color: var(--text-color); transition: background-color 0.3s ease, color 0.3s ease; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; overflow-x: hidden; padding-top: 80px; }
 
     h1 { font-weight: 700; font-size: 1.75rem; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-    p.desc { font-weight: 300; opacity: 0.7; font-size: 1rem; margin-bottom: 2.5rem; word-break: keep-all; }
+    p.desc { font-weight: 300; opacity: 0.7; font-size: 1rem; margin-bottom: 2.5rem; word-break: keep-all; white-space: pre-wrap; }
 
     .container { width: 100%; max-width: 420px; padding: 0 20px; }
     .profile-section { text-align: center; margin-bottom: 2rem; }
-    .profile-img-wrapper { width: 120px; height: 120px; margin: 0 auto 1.5rem; }
-    .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; display: none; }
-    .profile-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-color: var(--text-color); color: var(--bg-color); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; }
+    .profile-img-wrapper { width: 120px; height: 120px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; }
+    .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: none; }
+    .profile-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-color: var(--text-color); color: var(--bg-color); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; border-radius: 50%; }
 
     .link-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 60px; }
 
@@ -265,7 +265,7 @@
       <label for="pwInput">설정 비밀번호 변경</label>
       <input type="password" id="pwInput" class="form-control" placeholder="새 비밀번호 입력">
       <button type="button" class="sidebar-btn" id="savePwBtn" style="margin-top:4px;">비밀번호 변경</button>
-      <span class="hint">초기 비밀번호: 0000</span>
+      <span class="hint">비밀번호를 변경하지 않은 경우 초기값을 사용하세요.</span>
     </div>
 
     <!-- GitHub 토큰 -->
@@ -398,14 +398,33 @@
     const getPwHash = () => localStorage.getItem(PW_KEY) || DEFAULT_PW_HASH;
 
     const verifyAndOpenSettings = () => {
-      const input = prompt('비밀번호를 입력하세요:\n(초기 비밀번호: 0000)');
+      const input = prompt('비밀번호를 입력하세요:');
       if (input === null) return;
       if (hashStr(input) === getPwHash()) {
+        if (getPwHash() === DEFAULT_PW_HASH) {
+          alert('보안을 위해 설정에서 비밀번호를 변경해주세요.');
+        }
         UI.sidebar.classList.add('open');
         UI.overlay.classList.add('open');
       } else {
         alert('비밀번호가 틀렸습니다.');
       }
+    };
+
+    // SETTINGS 버튼: 관리자 기기(토큰 저장됨)에서만 표시
+    const refreshSettingsBtn = () => {
+      const isOwner = !!localStorage.getItem(GH_TOKEN_KEY);
+      UI.openBtn.style.opacity = isOwner ? '1' : '0';
+      UI.openBtn.style.pointerEvents = isOwner ? 'auto' : 'none';
+    };
+
+    // 프로필 이미지 3번 클릭 → 설정 접근 (새 기기용 히든 접근)
+    let profileClicks = 0, profileTimer = null;
+    const handleProfileClick = () => {
+      profileClicks++;
+      clearTimeout(profileTimer);
+      profileTimer = setTimeout(() => { profileClicks = 0; }, 700);
+      if (profileClicks >= 3) { profileClicks = 0; verifyAndOpenSettings(); }
     };
 
     // ===== DOM =====
@@ -565,6 +584,8 @@
     UI.openBtn.addEventListener('click', verifyAndOpenSettings);
     UI.closeBtn.addEventListener('click', () => toggleSidebar(true));
     UI.overlay.addEventListener('click', () => toggleSidebar(true));
+    UI.mainImg.addEventListener('click', handleProfileClick);
+    UI.mainPlaceholder.addEventListener('click', handleProfileClick);
 
     UI.imgFileInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
@@ -661,6 +682,7 @@
       UI.ghTokenInput.value = '';
       UI.ghTokenDetails.removeAttribute('open');
       setPublishStatus('토큰 저장 완료.', 'success');
+      refreshSettingsBtn();
     });
 
     // 저장하기 (GitHub 배포)
@@ -737,6 +759,7 @@
       } finally {
         UI.loadingOverlay.style.opacity = '0';
         setTimeout(() => { UI.loadingOverlay.style.display = 'none'; }, 300);
+        refreshSettingsBtn();
       }
     })();
   </script>
