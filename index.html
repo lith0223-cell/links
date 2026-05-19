@@ -424,7 +424,7 @@
       <label>ADD NEW LINK</label>
       <input type="text" id="newLinkTitle" class="form-control" placeholder="TITLE">
       <input type="url" id="newLinkUrl" class="form-control" placeholder="URL (e.g., https://...)">
-      <button class="sidebar-btn" id="addLinkBtn" style="margin-top: 4px;">ADD LINK</button>
+      <button type="button" class="sidebar-btn" id="addLinkBtn" style="margin-top: 4px;">ADD LINK</button>
     </div>
 
     <div class="admin-link-list" id="adminLinkList">
@@ -560,22 +560,29 @@
       state.links.forEach(link => {
         const item = document.createElement('div');
         item.className = 'admin-link-item';
-        item.innerHTML = `
-          <div class="admin-link-info">
-            <div class="admin-link-title">${link.title}</div>
-            <div class="admin-link-url">${link.url}</div>
-          </div>
-          <button class="delete-btn" data-id="${link.id}">DEL</button>
-        `;
+
+        const info = document.createElement('div');
+        info.className = 'admin-link-info';
+
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'admin-link-title';
+        titleDiv.textContent = link.title;
+
+        const urlDiv = document.createElement('div');
+        urlDiv.className = 'admin-link-url';
+        urlDiv.textContent = link.url;
+
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'delete-btn';
+        delBtn.dataset.id = link.id;
+        delBtn.textContent = 'DEL';
+
+        info.appendChild(titleDiv);
+        info.appendChild(urlDiv);
+        item.appendChild(info);
+        item.appendChild(delBtn);
         UI.adminLinkList.appendChild(item);
-      });
-      
-      // Attach delete events
-      document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-id');
-          deleteLink(id);
-        });
       });
     };
 
@@ -638,6 +645,12 @@
       state.btn_color = e.target.value;
       renderColors();
       saveState();
+    });
+
+    // DEL 버튼 이벤트 위임 (한 번만 등록)
+    UI.adminLinkList.addEventListener('click', (e) => {
+      const btn = e.target.closest('.delete-btn');
+      if (btn) deleteLink(btn.dataset.id);
     });
 
     // Links Management
