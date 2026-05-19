@@ -1,0 +1,15 @@
+{
+  "profile_image_url": "",
+  "name": "YOUR NAME",
+  "desc": "A short description about yourself.",
+  "bg_color": "#ffffff",
+  "btn_color": "#000000",
+  "btn_radius": 0,
+  "btn_effect": "invert",
+  "btn_gradient": false,
+  "btn_color2": "#666666",
+  "links": [
+    { "id": "1", "title": "GITHUB", "url": "https://github.com" },
+    { "id": "2", "title": "PORTFOLIO", "url": "#" }
+  ]
+}

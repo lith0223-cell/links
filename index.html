@@ -18,88 +18,40 @@
       --btn-color2: #666666;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif; }
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color 0.3s ease, color 0.3s ease;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      overflow-x: hidden;
-      padding-top: 80px;
-    }
+    body { background-color: var(--bg-color); color: var(--text-color); transition: background-color 0.3s ease, color 0.3s ease; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; overflow-x: hidden; padding-top: 80px; }
 
     h1 { font-weight: 700; font-size: 1.75rem; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
     p.desc { font-weight: 300; opacity: 0.7; font-size: 1rem; margin-bottom: 2.5rem; word-break: keep-all; }
 
-    .container { width: 100%; max-width: 420px; padding: 0 20px; position: relative; }
-
+    .container { width: 100%; max-width: 420px; padding: 0 20px; }
     .profile-section { text-align: center; margin-bottom: 2rem; }
-
-    .profile-img-wrapper { width: 120px; height: 120px; margin: 0 auto 1.5rem; position: relative; }
-
+    .profile-img-wrapper { width: 120px; height: 120px; margin: 0 auto 1.5rem; }
     .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; display: none; }
-
-    .profile-img-placeholder {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      background-color: var(--text-color); color: var(--bg-color);
-      font-weight: 700; font-size: 0.8rem; letter-spacing: 1px;
-    }
+    .profile-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-color: var(--text-color); color: var(--bg-color); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; }
 
     .link-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 60px; }
 
-    /* ===== Button Base ===== */
     .btn {
       background-color: var(--btn-color);
       color: var(--btn-text-color);
       border: none;
       padding: 16px 20px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 700;
+      cursor: pointer; font-size: 1rem; font-weight: 700;
       border-radius: var(--btn-radius);
-      text-decoration: none;
-      display: block;
-      text-align: center;
+      text-decoration: none; display: block; text-align: center;
       transition: filter 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-      user-select: none;
-      position: relative;
-      overflow: hidden;
+      user-select: none; position: relative; overflow: hidden;
     }
-
     .btn:active { transform: scale(0.98); }
-
-    /* 기본 호버: 부드러운 밝기 감소 */
     .btn.fx-invert:hover { filter: brightness(0.82); }
+    .btn.gradient-on { background: linear-gradient(135deg, var(--btn-color), var(--btn-color2)); }
 
-    /* ===== 그라데이션 ===== */
-    .btn.gradient-on {
-      background: linear-gradient(135deg, var(--btn-color), var(--btn-color2));
-      border-color: transparent;
-    }
-
-    /* ===== 애니메이션: 반짝임 (45도 동기화) ===== */
-    @keyframes btnShimmer {
-      0%   { left: -80%; }
-      100% { left: 120%; }
-    }
-
+    @keyframes btnShimmer { 0% { left: -80%; } 100% { left: 120%; } }
     .btn.fx-shimmer::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -80%;
-      width: 35%;
-      height: 200%;
+      content: ''; position: absolute; top: -50%; left: -80%;
+      width: 35%; height: 200%;
       background: linear-gradient(to right, transparent, rgba(255,255,255,0.38), transparent);
       transform: skewX(-25deg);
       animation: btnShimmer 3s linear infinite;
@@ -107,72 +59,41 @@
       pointer-events: none;
     }
 
-    /* ===== 애니메이션: 맥박 ===== */
-    @keyframes btnPulse {
-      0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(0,0,0,0.15); }
-      50%       { transform: scale(1.03); box-shadow: 0 0 0 8px rgba(0,0,0,0); }
-    }
-
+    @keyframes btnPulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,0,0,0.15); } 50% { transform: scale(1.03); box-shadow: 0 0 0 8px rgba(0,0,0,0); } }
     .btn.fx-pulse { animation: btnPulse 2s ease-in-out infinite; }
     .btn.fx-pulse:active { transform: scale(0.97); animation: none; }
+    .btn.fx-float:hover { transform: translateY(-5px); box-shadow: 0 10px 24px rgba(0,0,0,0.22); }
 
-    /* ===== 애니메이션: 떠오르기 ===== */
-    .btn.fx-float:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.22);
-      filter: none;
+    /* Loading Overlay */
+    #loadingOverlay {
+      position: fixed; inset: 0;
+      background: var(--bg-color);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+      font-weight: 700; letter-spacing: 3px; font-size: 0.85rem;
+      transition: opacity 0.3s ease;
     }
 
-    /* ===== Settings Trigger ===== */
-    .settings-trigger {
-      position: fixed; top: 20px; right: 20px;
-      background: none; border: none;
-      color: var(--text-color); font-size: 0.85rem; font-weight: 700;
-      cursor: pointer; letter-spacing: 1.5px; z-index: 100; transition: opacity 0.2s;
-    }
+    .settings-trigger { position: fixed; top: 20px; right: 20px; background: none; border: none; color: var(--text-color); font-size: 0.85rem; font-weight: 700; cursor: pointer; letter-spacing: 1.5px; z-index: 100; transition: opacity 0.2s; }
     .settings-trigger:hover { opacity: 0.5; }
 
-    .overlay {
-      position: fixed; top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.4); z-index: 999;
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
+    .overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
     .overlay.open { opacity: 1; visibility: visible; }
 
-    .sidebar {
-      position: fixed; top: 0; right: 0;
-      width: 320px; max-width: 90vw; height: 100vh;
-      background-color: #ffffff; color: #000000;
-      border-left: 1px solid #000000;
-      padding: 30px 24px;
-      transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      z-index: 1000; overflow-y: auto;
-    }
+    .sidebar { position: fixed; top: 0; right: 0; width: 320px; max-width: 90vw; height: 100vh; background-color: #ffffff; color: #000000; border-left: 1px solid #000; padding: 30px 24px; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 1000; overflow-y: auto; }
     .sidebar.open { transform: translateX(0); }
 
-    .sidebar-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid #000;
-    }
+    .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid #000; }
     .sidebar-header h2 { font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; }
-
     .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; font-weight: 300; color: #000; line-height: 1; }
 
     .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
     .form-group label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; }
-
-    .form-control {
-      padding: 12px; border: 1px solid #000; border-radius: 0;
-      font-family: inherit; font-size: 0.9rem; background: transparent; color: #000;
-    }
+    .form-control { padding: 12px; border: 1px solid #000; border-radius: 0; font-family: inherit; font-size: 0.9rem; background: transparent; color: #000; }
     .form-control:focus { outline: 2px solid #000; outline-offset: -1px; }
     textarea.form-control { resize: vertical; }
 
     .color-picker-group { display: flex; align-items: center; justify-content: space-between; }
-
     .color-picker { width: 48px; height: 48px; padding: 0; border: 1px solid #000; cursor: pointer; background: transparent; }
     .color-picker::-webkit-color-swatch-wrapper { padding: 0; }
     .color-picker::-webkit-color-swatch { border: none; }
@@ -180,12 +101,7 @@
     hr { margin: 30px 0; border: 0; border-top: 1px dashed #ccc; }
 
     .admin-link-list { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
-
-    .admin-link-item {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 12px; border: 1px solid #000; background: #fafafa;
-    }
-
+    .admin-link-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid #000; background: #fafafa; }
     .admin-link-info { flex-grow: 1; overflow: hidden; padding-right: 10px; }
     .admin-link-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .admin-link-url { font-weight: 300; font-size: 0.75rem; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -194,50 +110,52 @@
     .delete-btn:hover { background: #fff; color: #000; }
 
     .sidebar-btn { background: #000; color: #fff; border: 1px solid #000; padding: 12px; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.2s; width: 100%; font-family: inherit; font-size: 0.9rem; }
-    .sidebar-btn:hover { background: #fff; color: #000; }
+    .sidebar-btn:hover:not(:disabled) { background: #fff; color: #000; }
+    .sidebar-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .publish-btn { background: #000; color: #fff; border: none; padding: 16px; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.2s; width: 100%; font-family: inherit; font-size: 1rem; letter-spacing: 1px; margin-bottom: 8px; }
+    .publish-btn:hover:not(:disabled) { background: #333; }
+    .publish-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .reset-btn { background: transparent; color: #000; border: 1px solid #000; padding: 12px; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.2s; width: 100%; font-family: inherit; font-size: 0.9rem; }
     .reset-btn:hover { background: #000; color: #fff; }
 
     .hint { font-size: 0.72rem; color: #888; line-height: 1.5; }
 
-    /* ===== 스타일 선택 버튼 ===== */
     .style-options { display: flex; gap: 6px; }
-
-    .style-opt {
-      flex: 1; padding: 10px 4px;
-      border: 1px solid #000; background: #fff;
-      cursor: pointer; font-size: 0.78rem; font-weight: 700;
-      font-family: inherit; transition: all 0.15s; text-align: center;
-    }
+    .style-opt { flex: 1; padding: 10px 4px; border: 1px solid #000; background: #fff; cursor: pointer; font-size: 0.78rem; font-weight: 700; font-family: inherit; transition: all 0.15s; text-align: center; }
     .style-opt:hover:not(.active) { background: #f0f0f0; }
     .style-opt.active { background: #000; color: #fff; }
 
-    /* ===== 업로드 UI ===== */
-    .upload-box {
-      border: 1px dashed #000; padding: 20px;
-      text-align: center; cursor: pointer;
-      position: relative; transition: background 0.2s;
-    }
+    .upload-box { border: 1px dashed #000; padding: 20px; text-align: center; cursor: pointer; position: relative; transition: background 0.2s; }
     .upload-box:hover { background: #f5f5f5; }
     .upload-box input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
     .upload-box-label { font-size: 0.85rem; font-weight: 700; pointer-events: none; }
 
     .upload-status { font-size: 0.78rem; font-weight: 700; margin-top: 4px; min-height: 18px; }
     .upload-status.success { color: #008000; }
-    .upload-status.error   { color: #cc0000; }
+    .upload-status.error { color: #cc0000; }
     .upload-status.loading { color: #888; }
 
     .img-preview { width: 60px; height: 60px; object-fit: cover; border: 1px solid #000; display: none; }
     .img-preview.visible { display: block; }
 
-    .api-key-section { border: 1px solid #ddd; padding: 12px; background: #fafafa; }
-    .api-key-section summary { font-size: 0.8rem; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; }
-    .api-key-section .inner { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .collapsible { border: 1px solid #ddd; padding: 12px; background: #fafafa; }
+    .collapsible summary { font-size: 0.8rem; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; }
+    .collapsible .inner { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+
+    .publish-status { font-size: 0.8rem; font-weight: 700; text-align: center; min-height: 20px; margin-bottom: 8px; }
+    .publish-status.success { color: #008000; }
+    .publish-status.error { color: #cc0000; }
+    .publish-status.loading { color: #888; }
+
+    .copy-url-btn { background: transparent; color: #000; border: 1px solid #000; padding: 10px; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.2s; width: 100%; font-family: inherit; font-size: 0.85rem; margin-bottom: 12px; }
+    .copy-url-btn:hover { background: #f5f5f5; }
   </style>
 </head>
 <body>
 
+  <div id="loadingOverlay">LOADING...</div>
   <div class="overlay" id="overlay"></div>
   <button class="settings-trigger" id="openSettingsBtn">[ SETTINGS ]</button>
 
@@ -270,7 +188,7 @@
         </div>
       </div>
       <div class="upload-status" id="uploadStatus"></div>
-      <details class="api-key-section" id="apiKeyDetails">
+      <details class="collapsible" id="apiKeyDetails">
         <summary>ImgBB API 키 설정 (1회)</summary>
         <div class="inner">
           <span class="hint">1. <strong>imgbb.com</strong> 무료 가입<br>2. <strong>api.imgbb.com</strong>에서 키 발급<br>3. 아래 입력 후 저장</span>
@@ -284,7 +202,6 @@
       <label for="nameInput">NAME</label>
       <input type="text" id="nameInput" class="form-control" placeholder="YOUR NAME">
     </div>
-
     <div class="form-group">
       <label for="descInput">DESCRIPTION</label>
       <textarea id="descInput" class="form-control" rows="3" placeholder="A short description about yourself."></textarea>
@@ -292,19 +209,17 @@
 
     <hr>
 
-    <!-- 색상 -->
     <div class="form-group color-picker-group">
-      <label for="bgColorPicker">배경 색상</label>
+      <label>배경 색상</label>
       <input type="color" id="bgColorPicker" class="color-picker" value="#ffffff">
     </div>
     <div class="form-group color-picker-group">
-      <label for="btnColorPicker">버튼 색상</label>
+      <label>버튼 색상</label>
       <input type="color" id="btnColorPicker" class="color-picker" value="#000000">
     </div>
 
     <hr>
 
-    <!-- 버튼 스타일 -->
     <div class="form-group">
       <label>버튼 모양</label>
       <div class="style-options" id="radiusOptions">
@@ -313,7 +228,6 @@
         <button type="button" class="style-opt" data-value="999">알약</button>
       </div>
     </div>
-
     <div class="form-group">
       <label>버튼 효과</label>
       <div class="style-options" id="effectOptions">
@@ -323,7 +237,6 @@
         <button type="button" class="style-opt" data-value="float">떠오르기</button>
       </div>
     </div>
-
     <div class="form-group">
       <label>그라데이션</label>
       <div style="display:flex; align-items:center; gap:10px;">
@@ -331,21 +244,19 @@
         <span style="font-size:0.85rem;">그라데이션 사용</span>
       </div>
       <div id="gradientColorRow" class="color-picker-group" style="display:none; margin-top:4px;">
-        <label for="btnColor2Picker">끝 색상</label>
+        <label>끝 색상</label>
         <input type="color" id="btnColor2Picker" class="color-picker" value="#666666">
       </div>
     </div>
 
     <hr>
 
-    <!-- 링크 관리 -->
     <div class="form-group">
       <label>ADD NEW LINK</label>
       <input type="text" id="newLinkTitle" class="form-control" placeholder="TITLE">
       <input type="url" id="newLinkUrl" class="form-control" placeholder="URL (e.g., https://...)">
       <button type="button" class="sidebar-btn" id="addLinkBtn" style="margin-top:4px;">ADD LINK</button>
     </div>
-
     <div class="admin-link-list" id="adminLinkList"></div>
 
     <hr>
@@ -357,83 +268,67 @@
       <span class="hint">초기 비밀번호: 0000</span>
     </div>
 
+    <!-- GitHub 토큰 -->
+    <details class="collapsible" id="ghTokenDetails">
+      <summary>GitHub 토큰 설정 (1회)</summary>
+      <div class="inner">
+        <span class="hint">repo 권한이 있는 GitHub PAT를 입력하세요.<br>저장하기 버튼을 사용하는 데 필요합니다.</span>
+        <input type="password" id="ghTokenInput" class="form-control" placeholder="ghp_...">
+        <button type="button" class="sidebar-btn" id="saveGhTokenBtn">토큰 저장</button>
+      </div>
+    </details>
+
     <hr>
 
-    <button type="button" class="sidebar-btn" id="copyLinkBtn" style="margin-bottom:12px;">내 링크 복사</button>
+    <!-- 저장 및 공유 -->
+    <div class="publish-status" id="publishStatus"></div>
+    <button type="button" class="publish-btn" id="publishBtn">저장하기</button>
+    <button type="button" class="copy-url-btn" id="copyLinkBtn">내 링크 복사</button>
     <button type="button" class="reset-btn" id="resetBtn">RESET TO DEFAULT</button>
   </div>
 
   <script>
-    // ===== Utilities =====
+    // ===== Config =====
+    const GH_OWNER = 'lith0223-cell';
+    const GH_REPO  = 'links';
+    const GH_FILE  = 'data.json';
+    const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
+    const GH_RAW   = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/${GH_FILE}`;
 
-    const hashStr = (str) => {
+    // ===== Keys =====
+    const DATA_KEY    = 'localLinkerData';
+    const PW_KEY      = 'llPwHash';
+    const IMGBB_KEY   = 'llImgBBKey';
+    const GH_TOKEN_KEY = 'llGHToken';
+    const DEFAULT_PW_HASH = hashStr('0000');
+
+    // ===== Utilities =====
+    function hashStr(str) {
       let h = 5381;
       for (let i = 0; i < str.length; i++) h = ((h << 5) + h) ^ str.charCodeAt(i);
       return (h >>> 0).toString(36);
-    };
+    }
 
-    const encodeState = (s) => {
-      try {
-        const json = JSON.stringify(s);
-        return btoa(encodeURIComponent(json).replace(/%([0-9A-F]{2})/gi,
-          (_, p1) => String.fromCharCode(parseInt(p1, 16))));
-      } catch(e) { return ''; }
-    };
-
-    const decodeState = (b64) => {
-      try {
-        return JSON.parse(decodeURIComponent(
-          Array.from(atob(b64), c => '%' + c.charCodeAt(0).toString(16).padStart(2, '0')).join('')
-        ));
-      } catch(e) { return null; }
-    };
-
-    const getContrastYIQ = (hexcolor) => {
-      hexcolor = hexcolor.replace('#', '');
-      if (hexcolor.length === 3) hexcolor = hexcolor.split('').map(c => c + c).join('');
-      const r = parseInt(hexcolor.substr(0,2),16);
-      const g = parseInt(hexcolor.substr(2,2),16);
-      const b = parseInt(hexcolor.substr(4,2),16);
+    const getContrastYIQ = (hex) => {
+      hex = hex.replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+      const r = parseInt(hex.substr(0,2),16), g = parseInt(hex.substr(2,2),16), b = parseInt(hex.substr(4,2),16);
       return ((r*299 + g*587 + b*114) / 1000 >= 128) ? '#000000' : '#ffffff';
     };
 
-    // 모든 shimmer 버튼이 동일한 타이밍으로 움직이도록 현재 진행 위상 계산
-    const SHIMMER_DURATION = 3; // CSS와 동일하게 맞춤
-    const getShimmerDelay = () => `-${((performance.now() / 1000) % SHIMMER_DURATION).toFixed(3)}s`;
-
-    const fileToBase64 = (file) => new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
+    const fileToBase64 = (file) => new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(r.result);
+      r.onerror = rej;
+      r.readAsDataURL(file);
     });
 
-    // ===== ImgBB =====
+    const toB64 = (str) => btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/gi, (_, p) => String.fromCharCode(parseInt(p,16))));
 
-    const IMGBB_KEY = 'llImgBBKey';
-
-    const uploadToImgBB = async (file) => {
-      const apiKey = localStorage.getItem(IMGBB_KEY);
-      if (!apiKey) throw new Error('NO_KEY');
-      const base64 = await fileToBase64(file);
-      const formData = new FormData();
-      formData.append('key', apiKey);
-      formData.append('image', base64.split(',')[1]);
-      const res = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData });
-      if (!res.ok) throw new Error('NETWORK_ERROR');
-      const json = await res.json();
-      if (json.success) return json.data.url;
-      throw new Error('UPLOAD_FAILED');
-    };
-
-    // ===== Constants =====
-
-    const DATA_KEY = 'localLinkerData';
-    const PW_KEY = 'llPwHash';
-    const DEFAULT_PW_HASH = hashStr('0000');
+    const SHIMMER_DURATION = 3;
+    const getShimmerDelay = () => `-${((performance.now() / 1000) % SHIMMER_DURATION).toFixed(3)}s`;
 
     // ===== Default State =====
-
     const defaultState = {
       profile_image_url: '',
       name: 'YOUR NAME',
@@ -450,37 +345,56 @@
       ]
     };
 
-    // ===== State Loading =====
+    let state = { ...defaultState };
 
-    let state;
-    const rawHash = location.hash.slice(1);
-    const hashData = rawHash ? decodeState(rawHash) : null;
+    // ===== GitHub API =====
+    const fetchProfileData = async () => {
+      const res = await fetch(GH_RAW + '?_=' + Date.now());
+      if (!res.ok) throw new Error('FETCH_FAILED');
+      return res.json();
+    };
 
-    if (hashData && hashData.name !== undefined) {
-      state = { ...defaultState, ...hashData };
-      if (!Array.isArray(state.links)) state.links = [...defaultState.links];
-    } else {
-      state = { ...defaultState };
-      try {
-        const saved = localStorage.getItem(DATA_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          state = { ...defaultState, ...parsed };
-          if (!Array.isArray(state.links)) state.links = [...defaultState.links];
-        }
-      } catch(e) {}
-    }
+    const publishToGitHub = async (data) => {
+      const token = localStorage.getItem(GH_TOKEN_KEY);
+      if (!token) throw new Error('NO_TOKEN');
 
-    // ===== Persistence =====
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      };
 
-    const saveState = () => {
-      localStorage.setItem(DATA_KEY, JSON.stringify(state));
-      const encoded = encodeState(state);
-      if (encoded) history.replaceState(null, '', location.pathname + '#' + encoded);
+      const metaRes = await fetch(GH_API, { headers });
+      if (metaRes.status === 401) throw new Error('INVALID_TOKEN');
+      if (!metaRes.ok) throw new Error('API_ERROR');
+      const { sha } = await metaRes.json();
+
+      const content = toB64(JSON.stringify(data, null, 2));
+      const putRes = await fetch(GH_API, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify({ message: 'Update profile', content, sha })
+      });
+      if (putRes.status === 401) throw new Error('INVALID_TOKEN');
+      if (!putRes.ok) throw new Error('PUT_FAILED');
+    };
+
+    // ===== ImgBB =====
+    const uploadToImgBB = async (file) => {
+      const apiKey = localStorage.getItem(IMGBB_KEY);
+      if (!apiKey) throw new Error('NO_KEY');
+      const base64 = await fileToBase64(file);
+      const formData = new FormData();
+      formData.append('key', apiKey);
+      formData.append('image', base64.split(',')[1]);
+      const res = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData });
+      if (!res.ok) throw new Error('UPLOAD_FAILED');
+      const json = await res.json();
+      if (json.success) return json.data.url;
+      throw new Error('UPLOAD_FAILED');
     };
 
     // ===== Password =====
-
     const getPwHash = () => localStorage.getItem(PW_KEY) || DEFAULT_PW_HASH;
 
     const verifyAndOpenSettings = () => {
@@ -495,9 +409,9 @@
     };
 
     // ===== DOM =====
-
     const UI = {
       root: document.documentElement,
+      loadingOverlay: document.getElementById('loadingOverlay'),
       openBtn: document.getElementById('openSettingsBtn'),
       closeBtn: document.getElementById('closeSettingsBtn'),
       sidebar: document.getElementById('sidebar'),
@@ -529,20 +443,32 @@
       adminLinkList: document.getElementById('adminLinkList'),
       pwInput: document.getElementById('pwInput'),
       savePwBtn: document.getElementById('savePwBtn'),
+      ghTokenInput: document.getElementById('ghTokenInput'),
+      saveGhTokenBtn: document.getElementById('saveGhTokenBtn'),
+      ghTokenDetails: document.getElementById('ghTokenDetails'),
+      publishBtn: document.getElementById('publishBtn'),
+      publishStatus: document.getElementById('publishStatus'),
       copyLinkBtn: document.getElementById('copyLinkBtn'),
       resetBtn: document.getElementById('resetBtn')
     };
 
-    // ===== Render =====
+    // ===== Persistence (local only) =====
+    const saveLocal = () => localStorage.setItem(DATA_KEY, JSON.stringify(state));
 
+    // ===== Render =====
     const setUploadStatus = (msg, type) => {
       UI.uploadStatus.textContent = msg;
       UI.uploadStatus.className = 'upload-status' + (type ? ' ' + type : '');
     };
 
-    const syncStyleOptions = (container, activeValue) => {
-      container.querySelectorAll('.style-opt').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.value === String(activeValue));
+    const setPublishStatus = (msg, type) => {
+      UI.publishStatus.textContent = msg;
+      UI.publishStatus.className = 'publish-status' + (type ? ' ' + type : '');
+    };
+
+    const syncStyleOptions = (container, val) => {
+      container.querySelectorAll('.style-opt').forEach(b => {
+        b.classList.toggle('active', b.dataset.value === String(val));
       });
     };
 
@@ -581,6 +507,8 @@
       UI.imgbbKeyInput.value = savedKey || '';
       if (savedKey) UI.apiKeyDetails.removeAttribute('open');
       else UI.apiKeyDetails.setAttribute('open', '');
+      const savedToken = localStorage.getItem(GH_TOKEN_KEY);
+      if (savedToken) UI.ghTokenDetails.removeAttribute('open');
     };
 
     const renderLinks = () => {
@@ -601,24 +529,19 @@
       state.links.forEach(link => {
         const item = document.createElement('div');
         item.className = 'admin-link-item';
-
         const info = document.createElement('div');
         info.className = 'admin-link-info';
-
         const titleDiv = document.createElement('div');
         titleDiv.className = 'admin-link-title';
         titleDiv.textContent = link.title;
-
         const urlDiv = document.createElement('div');
         urlDiv.className = 'admin-link-url';
         urlDiv.textContent = link.url;
-
         const delBtn = document.createElement('button');
         delBtn.type = 'button';
         delBtn.className = 'delete-btn';
         delBtn.dataset.id = link.id;
         delBtn.textContent = 'DEL';
-
         info.appendChild(titleDiv);
         info.appendChild(urlDiv);
         item.appendChild(info);
@@ -630,49 +553,32 @@
       syncStyleOptions(UI.effectOptions, state.btn_effect || 'invert');
     };
 
-    const renderAll = () => {
-      renderColors();
-      renderProfile();
-      renderLinks();
-    };
+    const renderAll = () => { renderColors(); renderProfile(); renderLinks(); };
 
     // ===== Events =====
-
-    const toggleSidebar = (forceClose = false) => {
+    const toggleSidebar = (close = false) => {
       const isOpen = UI.sidebar.classList.contains('open');
-      if (forceClose || isOpen) {
-        UI.sidebar.classList.remove('open');
-        UI.overlay.classList.remove('open');
-      } else {
-        UI.sidebar.classList.add('open');
-        UI.overlay.classList.add('open');
-      }
+      if (close || isOpen) { UI.sidebar.classList.remove('open'); UI.overlay.classList.remove('open'); }
+      else { UI.sidebar.classList.add('open'); UI.overlay.classList.add('open'); }
     };
 
     UI.openBtn.addEventListener('click', verifyAndOpenSettings);
     UI.closeBtn.addEventListener('click', () => toggleSidebar(true));
     UI.overlay.addEventListener('click', () => toggleSidebar(true));
 
-    // 이미지 업로드
     UI.imgFileInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
-      if (!localStorage.getItem(IMGBB_KEY)) {
-        UI.apiKeyDetails.setAttribute('open', '');
-        setUploadStatus('먼저 ImgBB API 키를 저장하세요.', 'error');
-        return;
-      }
+      if (!localStorage.getItem(IMGBB_KEY)) { UI.apiKeyDetails.setAttribute('open',''); setUploadStatus('먼저 ImgBB API 키를 저장하세요.', 'error'); return; }
       UI.uploadBoxLabel.textContent = file.name;
       setUploadStatus('업로드 중...', 'loading');
       try {
         const url = await uploadToImgBB(file);
         state.profile_image_url = url;
         renderProfile();
-        saveState();
-        setUploadStatus('업로드 완료! 방문자에게도 표시됩니다.', 'success');
-      } catch(err) {
-        setUploadStatus(err.message === 'NO_KEY' ? 'API 키를 먼저 저장하세요.' : '업로드 실패. API 키를 확인하세요.', 'error');
-      }
+        saveLocal();
+        setUploadStatus('업로드 완료!', 'success');
+      } catch { setUploadStatus('업로드 실패. API 키를 확인하세요.', 'error'); }
     });
 
     UI.saveImgbbKeyBtn.addEventListener('click', () => {
@@ -680,50 +586,45 @@
       if (!key) { alert('API 키를 입력하세요.'); return; }
       localStorage.setItem(IMGBB_KEY, key);
       UI.apiKeyDetails.removeAttribute('open');
-      setUploadStatus('API 키 저장 완료. 이제 이미지를 업로드하세요.', 'success');
+      setUploadStatus('API 키 저장 완료.', 'success');
     });
 
-    UI.nameInput.addEventListener('input', (e) => { state.name = e.target.value; UI.mainName.textContent = state.name || ' '; saveState(); });
-    UI.descInput.addEventListener('input', (e) => { state.desc = e.target.value; UI.mainDesc.textContent = state.desc || ' '; saveState(); });
-    UI.bgColorPicker.addEventListener('input', (e) => { state.bg_color = e.target.value; renderColors(); saveState(); });
-    UI.btnColorPicker.addEventListener('input', (e) => { state.btn_color = e.target.value; renderColors(); saveState(); });
+    UI.nameInput.addEventListener('input', (e) => { state.name = e.target.value; UI.mainName.textContent = state.name || ' '; saveLocal(); });
+    UI.descInput.addEventListener('input', (e) => { state.desc = e.target.value; UI.mainDesc.textContent = state.desc || ' '; saveLocal(); });
+    UI.bgColorPicker.addEventListener('input', (e) => { state.bg_color = e.target.value; renderColors(); saveLocal(); });
+    UI.btnColorPicker.addEventListener('input', (e) => { state.btn_color = e.target.value; renderColors(); saveLocal(); });
 
-    // 버튼 모양
     UI.radiusOptions.addEventListener('click', (e) => {
       const btn = e.target.closest('.style-opt');
       if (!btn) return;
       state.btn_radius = Number(btn.dataset.value);
       UI.root.style.setProperty('--btn-radius', state.btn_radius + 'px');
       syncStyleOptions(UI.radiusOptions, state.btn_radius);
-      saveState();
+      saveLocal();
     });
 
-    // 버튼 효과
     UI.effectOptions.addEventListener('click', (e) => {
       const btn = e.target.closest('.style-opt');
       if (!btn) return;
       state.btn_effect = btn.dataset.value;
       syncStyleOptions(UI.effectOptions, state.btn_effect);
       renderLinks();
-      saveState();
+      saveLocal();
     });
 
-    // 그라데이션 토글
     UI.gradientToggle.addEventListener('change', (e) => {
       state.btn_gradient = e.target.checked;
       UI.gradientColorRow.style.display = state.btn_gradient ? 'flex' : 'none';
       renderLinks();
-      saveState();
+      saveLocal();
     });
 
-    // 그라데이션 끝 색상
     UI.btnColor2Picker.addEventListener('input', (e) => {
       state.btn_color2 = e.target.value;
       UI.root.style.setProperty('--btn-color2', state.btn_color2);
-      saveState();
+      saveLocal();
     });
 
-    // DEL 이벤트 위임
     UI.adminLinkList.addEventListener('click', (e) => {
       const btn = e.target.closest('.delete-btn');
       if (btn) deleteLink(btn.dataset.id);
@@ -735,64 +636,109 @@
       if (!title || !url) { alert('제목과 URL을 모두 입력해주세요.'); return; }
       if (!/^https?:\/\//i.test(url)) url = 'http://' + url;
       state.links.push({ id: Date.now().toString(), title, url });
-      saveState();
-      renderLinks();
+      saveLocal(); renderLinks();
       UI.newLinkTitle.value = '';
       UI.newLinkUrl.value = '';
     });
 
     const deleteLink = (id) => {
-      state.links = state.links.filter(link => String(link.id) !== String(id));
-      saveState();
-      renderLinks();
+      state.links = state.links.filter(l => String(l.id) !== String(id));
+      saveLocal(); renderLinks();
     };
 
     UI.savePwBtn.addEventListener('click', () => {
-      const newPw = UI.pwInput.value.trim();
-      if (!newPw) return;
-      localStorage.setItem(PW_KEY, hashStr(newPw));
+      const pw = UI.pwInput.value.trim();
+      if (!pw) return;
+      localStorage.setItem(PW_KEY, hashStr(pw));
       UI.pwInput.value = '';
       alert('비밀번호가 변경되었습니다.');
     });
 
+    UI.saveGhTokenBtn.addEventListener('click', () => {
+      const token = UI.ghTokenInput.value.trim();
+      if (!token) { alert('토큰을 입력하세요.'); return; }
+      localStorage.setItem(GH_TOKEN_KEY, token);
+      UI.ghTokenInput.value = '';
+      UI.ghTokenDetails.removeAttribute('open');
+      setPublishStatus('토큰 저장 완료.', 'success');
+    });
+
+    // 저장하기 (GitHub 배포)
+    UI.publishBtn.addEventListener('click', async () => {
+      if (!localStorage.getItem(GH_TOKEN_KEY)) {
+        UI.ghTokenDetails.setAttribute('open', '');
+        setPublishStatus('GitHub 토큰을 먼저 저장하세요.', 'error');
+        return;
+      }
+      UI.publishBtn.textContent = '저장 중...';
+      UI.publishBtn.disabled = true;
+      setPublishStatus('GitHub에 업로드 중...', 'loading');
+      try {
+        await publishToGitHub(state);
+        setPublishStatus('저장 완료! 방문자에게 바로 반영됩니다.', 'success');
+      } catch(err) {
+        const msg = err.message === 'NO_TOKEN' ? 'GitHub 토큰을 저장하세요.' :
+                    err.message === 'INVALID_TOKEN' ? '토큰이 유효하지 않습니다.' : '저장 실패. 토큰을 확인하세요.';
+        setPublishStatus(msg, 'error');
+      }
+      UI.publishBtn.textContent = '저장하기';
+      UI.publishBtn.disabled = false;
+    });
+
+    // 내 링크 복사 (짧은 URL)
     UI.copyLinkBtn.addEventListener('click', () => {
-      const encoded = encodeState(state);
-      const url = location.origin + location.pathname + '#' + encoded;
+      const url = location.origin + location.pathname;
       const fallback = () => { const el = document.createElement('textarea'); el.value = url; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); };
-      const copy = navigator.clipboard ? navigator.clipboard.writeText(url).catch(fallback) : Promise.resolve(fallback());
-      copy.then(() => { UI.copyLinkBtn.textContent = '복사 완료!'; setTimeout(() => { UI.copyLinkBtn.textContent = '내 링크 복사'; }, 2000); });
+      (navigator.clipboard ? navigator.clipboard.writeText(url).catch(fallback) : Promise.resolve(fallback()))
+        .then(() => { UI.copyLinkBtn.textContent = '복사 완료!'; setTimeout(() => { UI.copyLinkBtn.textContent = '내 링크 복사'; }, 2000); });
     });
 
     UI.resetBtn.addEventListener('click', () => {
       if (confirm('모든 설정이 초기화됩니다. 정말 진행하시겠습니까?')) {
         localStorage.removeItem(DATA_KEY);
         state = JSON.parse(JSON.stringify(defaultState));
-        history.replaceState(null, '', location.pathname);
         renderAll();
       }
     });
 
     // ===== SortableJS =====
-
     new Sortable(UI.mainLinkList, {
-      animation: 150,
-      delay: 100,
-      delayOnTouchOnly: true,
+      animation: 150, delay: 100, delayOnTouchOnly: true,
       ghostClass: 'sortable-ghost',
-      onEnd: function () {
+      onEnd() {
         const items = UI.mainLinkList.querySelectorAll('a.btn');
-        const newLinksArray = [];
-        items.forEach(item => {
-          const linkData = state.links.find(l => l.id === item.dataset.id);
-          if (linkData) newLinksArray.push(linkData);
-        });
-        state.links = newLinksArray;
-        saveState();
-        renderLinks();
+        const arr = [];
+        items.forEach(item => { const d = state.links.find(l => l.id === item.dataset.id); if (d) arr.push(d); });
+        state.links = arr;
+        saveLocal(); renderLinks();
       }
     });
 
-    renderAll();
+    // ===== Init: GitHub에서 데이터 로드 =====
+    (async () => {
+      try {
+        // localStorage 캐시로 먼저 빠르게 표시
+        const cached = localStorage.getItem(DATA_KEY);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          state = { ...defaultState, ...parsed };
+          if (!Array.isArray(state.links)) state.links = [...defaultState.links];
+          renderAll();
+        }
+        // GitHub에서 최신 데이터 가져오기
+        const ghData = await fetchProfileData();
+        state = { ...defaultState, ...ghData };
+        if (!Array.isArray(state.links)) state.links = [...defaultState.links];
+        saveLocal();
+        renderAll();
+      } catch(e) {
+        // GitHub 실패 시 localStorage 또는 기본값으로 폴백
+        if (!localStorage.getItem(DATA_KEY)) renderAll();
+      } finally {
+        UI.loadingOverlay.style.opacity = '0';
+        setTimeout(() => { UI.loadingOverlay.style.display = 'none'; }, 300);
+      }
+    })();
   </script>
 </body>
 </html>
