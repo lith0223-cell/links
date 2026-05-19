@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Linker</title>
+  
+  <!-- Pretendard Font CDN -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+  <!-- SortableJS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+  <style>
+    /* CSS Variables for Real-time Theme Updates */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --btn-color: #000000;
+      --btn-text-color: #ffffff;
+    }
+
+    /* Reset & Base Settings */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-x: hidden;
+      padding-top: 80px;
+    }
+
+    /* Typography */
+    h1 {
+      font-weight: 700;
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    
+    p.desc {
+      font-weight: 300;
+      opacity: 0.7;
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      word-break: keep-all;
+    }
+
+    /* Layout & Container */
+    .container {
+      width: 100%;
+      max-width: 420px;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    /* Profile Section */
+    .profile-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile-img-wrapper {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+    }
+
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0; /* Sharp Corner */
+      display: none;
+    }
+
+    .profile-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--text-color);
+      color: var(--bg-color);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    /* Link List (Sortable Container) */
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 60px;
+    }
+
+    /* Buttons */
+    .btn {
+      background-color: var(--btn-color);
+      color: var(--btn-text-color);
+      border: 1px solid var(--btn-color);
+      padding: 16px 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 0; /* Sharp corner */
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      transition: filter 0.2s ease, transform 0.1s ease;
+      user-select: none;
+    }
+    
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Invert Hover Effect */
+    .invert-hover:hover {
+      filter: invert(100%);
+    }
+
+    /* Settings Trigger Button */
+    .settings-trigger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 1.5px;
+      z-index: 100;
+      transition: opacity 0.2s;
+    }
+    
+    .settings-trigger:hover {
+      opacity: 0.5;
+    }
+
+    /* Sidebar Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Sidebar Settings Panel */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 320px;
+      max-width: 90vw;
+      height: 100vh;
+      background-color: #ffffff; /* 시크한 고정 화이트 배경 */
+      color: #000000;
+      border-left: 1px solid #000000;
+      padding: 30px 24px;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #000;
+    }
+    
+    .sidebar-header h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      font-weight: 300;
+      color: #000;
+      line-height: 1;
+    }
+
+    /* Form Elements in Sidebar */
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .form-control {
+      padding: 12px;
+      border: 1px solid #000;
+      border-radius: 0;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: transparent;
+      color: #000;
+      transition: outline 0.2s;
+    }
+    .form-control:focus {
+      outline: 2px solid #000;
+      outline-offset: -1px;
+    }
+    textarea.form-control {
+      resize: vertical;
+    }
+
+    /* Color Pickers */
+    .color-picker-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .color-picker {
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 1px solid #000;
+      cursor: pointer;
+      background: transparent;
+    }
+    .color-picker::-webkit-color-swatch-wrapper { padding: 0; }
+    .color-picker::-webkit-color-swatch { border: none; }
+
+    /* Divider */
+    hr {
+      margin: 30px 0;
+      border: 0;
+      border-top: 1px dashed #ccc;
+    }
+
+    /* Admin Link List */
+    .admin-link-list {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .admin-link-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid #000;
+      background: #fafafa;
+    }
+    
+    .admin-link-info {
+      flex-grow: 1;
+      overflow: hidden;
+      padding-right: 10px;
+    }
+    .admin-link-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .admin-link-url {
+      font-weight: 300;
+      font-size: 0.75rem;
+      color: #666;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .delete-btn {
+      background: #000;
+      color: #fff;
+      border: 1px solid #000;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .delete-btn:hover {
+      background: #fff;
+      color: #000;
+    }
+    
+    .sidebar-btn {
+      background: #000;
+      color: #fff;
+      border: 1px solid #000;
+      padding: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .sidebar-btn:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    .reset-btn {
+      background: transparent;
+      color: #000;
+      border: 1px solid #000;
+      padding: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      width: 100%;
+    }
+    .reset-btn:hover {
+      background: #000;
+      color: #fff;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Settings Trigger -->
+  <button class="settings-trigger" id="openSettingsBtn">[ SETTINGS ]</button>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="profile-section">
+      <div class="profile-img-wrapper">
+        <img src="" id="mainProfileImg" class="profile-img" alt="Profile Image">
+        <div id="mainProfileImgPlaceholder" class="profile-img-placeholder">NO IMG</div>
+      </div>
+      <h1 id="mainName">YOUR NAME</h1>
+      <p class="desc" id="mainDesc">A short description about yourself.</p>
+    </div>
+
+    <!-- Links Container (Sortable) -->
+    <div class="link-list" id="mainLinkList">
+      <!-- Links will be injected by JS -->
+    </div>
+  </div>
+
+  <!-- Sidebar (Settings) -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>SETTINGS</h2>
+      <button class="close-btn" id="closeSettingsBtn">&times;</button>
+    </div>
+
+    <!-- Profile Data -->
+    <div class="form-group">
+      <label for="imgUpload">PROFILE IMAGE</label>
+      <input type="file" id="imgUpload" accept="image/*" class="form-control" style="font-size: 0.8rem; padding: 8px;">
+    </div>
+    
+    <div class="form-group">
+      <label for="nameInput">NAME</label>
+      <input type="text" id="nameInput" class="form-control" placeholder="YOUR NAME">
+    </div>
+    
+    <div class="form-group">
+      <label for="descInput">DESCRIPTION</label>
+      <textarea id="descInput" class="form-control" rows="3" placeholder="A short description about yourself."></textarea>
+    </div>
+
+    <hr>
+
+    <!-- Theme Colors -->
+    <div class="form-group color-picker-group">
+      <label for="bgColorPicker">BACKGROUND COLOR</label>
+      <input type="color" id="bgColorPicker" class="color-picker" value="#ffffff">
+    </div>
+    <div class="form-group color-picker-group">
+      <label for="btnColorPicker">BUTTON COLOR</label>
+      <input type="color" id="btnColorPicker" class="color-picker" value="#000000">
+    </div>
+
+    <hr>
+
+    <!-- Links Management -->
+    <div class="form-group">
+      <label>ADD NEW LINK</label>
+      <input type="text" id="newLinkTitle" class="form-control" placeholder="TITLE">
+      <input type="url" id="newLinkUrl" class="form-control" placeholder="URL (e.g., https://...)">
+      <button class="sidebar-btn" id="addLinkBtn" style="margin-top: 4px;">ADD LINK</button>
+    </div>
+
+    <div class="admin-link-list" id="adminLinkList">
+      <!-- Admin links will be injected by JS -->
+    </div>
+
+    <hr>
+    <button class="reset-btn" id="resetBtn">RESET TO DEFAULT</button>
+  </div>
+
+  <script>
+    /**
+     * Local Linker - Application Logic
+     */
+
+    // 1. State Management
+    const defaultState = {
+      profile_image: null,
+      name: 'YOUR NAME',
+      desc: 'A short description about yourself.',
+      bg_color: '#ffffff',
+      btn_color: '#000000',
+      links: [
+        { id: '1', title: 'GITHUB', url: 'https://github.com' },
+        { id: '2', title: 'PORTFOLIO', url: '#' }
+      ]
+    };
+
+    // Load from LocalStorage or use default
+    let state = { ...defaultState };
+    try {
+      const savedData = localStorage.getItem('localLinkerData');
+      if (savedData) {
+        const parsed = JSON.parse(savedData);
+        state = { ...defaultState, ...parsed };
+        if (!state.links || !Array.isArray(state.links)) {
+          state.links = [...defaultState.links];
+        }
+      }
+    } catch (e) {
+      console.error('Failed to parse localStorage data', e);
+    }
+
+    // 2. DOM Elements Selection
+    const UI = {
+      root: document.documentElement,
+      openBtn: document.getElementById('openSettingsBtn'),
+      closeBtn: document.getElementById('closeSettingsBtn'),
+      sidebar: document.getElementById('sidebar'),
+      overlay: document.getElementById('overlay'),
+      
+      mainImg: document.getElementById('mainProfileImg'),
+      mainPlaceholder: document.getElementById('mainProfileImgPlaceholder'),
+      mainName: document.getElementById('mainName'),
+      mainDesc: document.getElementById('mainDesc'),
+      mainLinkList: document.getElementById('mainLinkList'),
+      
+      imgUpload: document.getElementById('imgUpload'),
+      nameInput: document.getElementById('nameInput'),
+      descInput: document.getElementById('descInput'),
+      bgColorPicker: document.getElementById('bgColorPicker'),
+      btnColorPicker: document.getElementById('btnColorPicker'),
+      
+      newLinkTitle: document.getElementById('newLinkTitle'),
+      newLinkUrl: document.getElementById('newLinkUrl'),
+      addLinkBtn: document.getElementById('addLinkBtn'),
+      adminLinkList: document.getElementById('adminLinkList'),
+      resetBtn: document.getElementById('resetBtn')
+    };
+
+    // 3. Utility Functions
+    const saveState = () => {
+      localStorage.setItem('localLinkerData', JSON.stringify(state));
+    };
+
+    // YIQ equation to calculate best text color (black or white) based on background hex
+    const getContrastYIQ = (hexcolor) => {
+      hexcolor = hexcolor.replace("#", "");
+      if (hexcolor.length === 3) {
+        hexcolor = hexcolor.split('').map(char => char + char).join('');
+      }
+      const r = parseInt(hexcolor.substr(0, 2), 16);
+      const g = parseInt(hexcolor.substr(2, 2), 16);
+      const b = parseInt(hexcolor.substr(4, 2), 16);
+      const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+      return (yiq >= 128) ? '#000000' : '#ffffff';
+    };
+
+    // 4. Render Functions
+    const renderColors = () => {
+      UI.root.style.setProperty('--bg-color', state.bg_color);
+      UI.root.style.setProperty('--text-color', getContrastYIQ(state.bg_color));
+      
+      UI.root.style.setProperty('--btn-color', state.btn_color);
+      UI.root.style.setProperty('--btn-text-color', getContrastYIQ(state.btn_color));
+
+      UI.bgColorPicker.value = state.bg_color;
+      UI.btnColorPicker.value = state.btn_color;
+    };
+
+    const renderProfile = () => {
+      if (state.profile_image) {
+        UI.mainImg.src = state.profile_image;
+        UI.mainImg.style.display = 'block';
+        UI.mainPlaceholder.style.display = 'none';
+      } else {
+        UI.mainImg.style.display = 'none';
+        UI.mainPlaceholder.style.display = 'flex';
+      }
+
+      UI.mainName.textContent = state.name;
+      UI.mainDesc.textContent = state.desc;
+
+      UI.nameInput.value = state.name;
+      UI.descInput.value = state.desc;
+    };
+
+    const renderLinks = () => {
+      // Render Main List
+      UI.mainLinkList.innerHTML = '';
+      state.links.forEach(link => {
+        const a = document.createElement('a');
+        a.href = link.url;
+        a.target = '_blank';
+        a.className = 'btn invert-hover';
+        a.textContent = link.title;
+        a.dataset.id = link.id; // required for SortableJS state sync
+        UI.mainLinkList.appendChild(a);
+      });
+
+      // Render Admin List (Sidebar)
+      UI.adminLinkList.innerHTML = '';
+      state.links.forEach(link => {
+        const item = document.createElement('div');
+        item.className = 'admin-link-item';
+        item.innerHTML = `
+          <div class="admin-link-info">
+            <div class="admin-link-title">${link.title}</div>
+            <div class="admin-link-url">${link.url}</div>
+          </div>
+          <button class="delete-btn" data-id="${link.id}">DEL</button>
+        `;
+        UI.adminLinkList.appendChild(item);
+      });
+      
+      // Attach delete events
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          deleteLink(id);
+        });
+      });
+    };
+
+    const renderAll = () => {
+      renderColors();
+      renderProfile();
+      renderLinks();
+    };
+
+    // 5. Event Listeners
+    
+    // Sidebar Toggle
+    const toggleSidebar = (forceClose = false) => {
+      if (forceClose || UI.sidebar.classList.contains('open')) {
+        UI.sidebar.classList.remove('open');
+        UI.overlay.classList.remove('open');
+      } else {
+        UI.sidebar.classList.add('open');
+        UI.overlay.classList.add('open');
+      }
+    };
+    UI.openBtn.addEventListener('click', () => toggleSidebar(false));
+    UI.closeBtn.addEventListener('click', () => toggleSidebar(true));
+    UI.overlay.addEventListener('click', () => toggleSidebar(true));
+
+    // Profile Edit
+    UI.nameInput.addEventListener('input', (e) => {
+      state.name = e.target.value;
+      UI.mainName.textContent = state.name || '\u00A0'; // Prevent collapse if empty
+      saveState();
+    });
+
+    UI.descInput.addEventListener('input', (e) => {
+      state.desc = e.target.value;
+      UI.mainDesc.textContent = state.desc || '\u00A0';
+      saveState();
+    });
+
+    UI.imgUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          state.profile_image = event.target.result;
+          renderProfile();
+          saveState();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Color Pickers
+    UI.bgColorPicker.addEventListener('input', (e) => {
+      state.bg_color = e.target.value;
+      renderColors();
+      saveState();
+    });
+
+    UI.btnColorPicker.addEventListener('input', (e) => {
+      state.btn_color = e.target.value;
+      renderColors();
+      saveState();
+    });
+
+    // Links Management
+    UI.addLinkBtn.addEventListener('click', () => {
+      const title = UI.newLinkTitle.value.trim();
+      let url = UI.newLinkUrl.value.trim();
+      
+      if (!title || !url) {
+        alert('제목과 URL을 모두 입력해주세요.');
+        return;
+      }
+      
+      // Auto-append http:// if missing
+      if (!/^https?:\/\//i.test(url)) {
+        url = 'http://' + url;
+      }
+
+      const newLink = {
+        id: Date.now().toString(),
+        title: title,
+        url: url
+      };
+
+      state.links.push(newLink);
+      saveState();
+      renderLinks();
+      
+      UI.newLinkTitle.value = '';
+      UI.newLinkUrl.value = '';
+    });
+
+    const deleteLink = (id) => {
+      state.links = state.links.filter(link => String(link.id) !== String(id));
+      saveState();
+      renderLinks();
+    };
+
+    // Reset to Default
+    UI.resetBtn.addEventListener('click', () => {
+      if (confirm('모든 설정과 링크가 초기 상태로 초기화됩니다. 정말 진행하시겠습니까?')) {
+        localStorage.removeItem('localLinkerData');
+        state = JSON.parse(JSON.stringify(defaultState)); // Deep copy default state
+        renderAll();
+      }
+    });
+
+    // 6. SortableJS Integration (Drag & Drop)
+    // Initialize Sortable on the Main Link List
+    new Sortable(UI.mainLinkList, {
+      animation: 150,
+      delay: 100, // UX: Prevents accidental drag when simply clicking to open link
+      delayOnTouchOnly: true, // Only delay on mobile devices
+      ghostClass: 'sortable-ghost',
+      onEnd: function () {
+        // Sync new DOM order back to State array
+        const items = UI.mainLinkList.querySelectorAll('a.btn');
+        const newLinksArray = [];
+        items.forEach(item => {
+          const id = item.dataset.id;
+          const linkData = state.links.find(l => l.id === id);
+          if (linkData) newLinksArray.push(linkData);
+        });
+        
+        state.links = newLinksArray;
+        saveState();
+        renderLinks(); // Re-render to update the sidebar list order too
+      }
+    });
+
+    // 7. Initial Load
+    renderAll();
+  </script>
+</body>
+</html>
