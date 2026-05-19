@@ -1,15 +1,18 @@
 {
-  "profile_image_url": "",
-  "name": "YOUR NAME",
-  "desc": "A short description about yourself.",
+  "profile_image_url": "https://i.ibb.co/23TsLGm2/d88f821c2cc2.jpg",
+  "name": "메타플레이스",
+  "desc": "예약부터 매출관리까지\n올인원 매장 관리, 메타플레이스로 쉽게 해결하세요!",
   "bg_color": "#ffffff",
-  "btn_color": "#000000",
-  "btn_radius": 0,
-  "btn_effect": "invert",
-  "btn_gradient": false,
-  "btn_color2": "#666666",
+  "btn_color": "#631dfc",
+  "btn_radius": 8,
+  "btn_effect": "float",
+  "btn_gradient": true,
+  "btn_color2": "#20bdff",
   "links": [
-    { "id": "1", "title": "GITHUB", "url": "https://github.com" },
-    { "id": "2", "title": "PORTFOLIO", "url": "#" }
+    {
+      "id": "1779167558107",
+      "title": "홈페이지 바로가기",
+      "url": "http://metaplace.co.kr"
+    }
   ]
 }
