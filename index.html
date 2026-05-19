@@ -113,13 +113,8 @@
       user-select: none;
     }
 
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .invert-hover:hover {
-      filter: invert(100%);
-    }
+    .btn:active { transform: scale(0.98); }
+    .invert-hover:hover { filter: invert(100%); }
 
     .settings-trigger {
       position: fixed;
@@ -136,32 +131,24 @@
       transition: opacity 0.2s;
     }
 
-    .settings-trigger:hover {
-      opacity: 0.5;
-    }
+    .settings-trigger:hover { opacity: 0.5; }
 
     .overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.4);
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.4);
       z-index: 999;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    .overlay.open {
-      opacity: 1;
-      visibility: visible;
-    }
+    .overlay.open { opacity: 1; visibility: visible; }
 
     .sidebar {
       position: fixed;
-      top: 0;
-      right: 0;
+      top: 0; right: 0;
       width: 320px;
       max-width: 90vw;
       height: 100vh;
@@ -175,9 +162,7 @@
       overflow-y: auto;
     }
 
-    .sidebar.open {
-      transform: translateX(0);
-    }
+    .sidebar.open { transform: translateX(0); }
 
     .sidebar-header {
       display: flex;
@@ -188,20 +173,12 @@
       border-bottom: 2px solid #000;
     }
 
-    .sidebar-header h2 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
+    .sidebar-header h2 { font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; }
 
     .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      font-weight: 300;
-      color: #000;
-      line-height: 1;
+      background: none; border: none;
+      font-size: 1.5rem; cursor: pointer;
+      font-weight: 300; color: #000; line-height: 1;
     }
 
     .form-group {
@@ -211,11 +188,7 @@
       gap: 8px;
     }
 
-    .form-group label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
+    .form-group label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; }
 
     .form-control {
       padding: 12px;
@@ -225,48 +198,25 @@
       font-size: 0.9rem;
       background: transparent;
       color: #000;
-      transition: outline 0.2s;
     }
 
-    .form-control:focus {
-      outline: 2px solid #000;
-      outline-offset: -1px;
-    }
+    .form-control:focus { outline: 2px solid #000; outline-offset: -1px; }
+    textarea.form-control { resize: vertical; }
 
-    textarea.form-control {
-      resize: vertical;
-    }
-
-    .color-picker-group {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    .color-picker-group { display: flex; align-items: center; justify-content: space-between; }
 
     .color-picker {
-      width: 48px;
-      height: 48px;
-      padding: 0;
-      border: 1px solid #000;
-      cursor: pointer;
-      background: transparent;
+      width: 48px; height: 48px;
+      padding: 0; border: 1px solid #000;
+      cursor: pointer; background: transparent;
     }
 
     .color-picker::-webkit-color-swatch-wrapper { padding: 0; }
     .color-picker::-webkit-color-swatch { border: none; }
 
-    hr {
-      margin: 30px 0;
-      border: 0;
-      border-top: 1px dashed #ccc;
-    }
+    hr { margin: 30px 0; border: 0; border-top: 1px dashed #ccc; }
 
-    .admin-link-list {
-      margin-top: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .admin-link-list { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
 
     .admin-link-item {
       display: flex;
@@ -277,89 +227,111 @@
       background: #fafafa;
     }
 
-    .admin-link-info {
-      flex-grow: 1;
-      overflow: hidden;
-      padding-right: 10px;
-    }
+    .admin-link-info { flex-grow: 1; overflow: hidden; padding-right: 10px; }
 
     .admin-link-title {
-      font-weight: 700;
-      font-size: 0.9rem;
-      margin-bottom: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-weight: 700; font-size: 0.9rem; margin-bottom: 4px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
     .admin-link-url {
-      font-weight: 300;
-      font-size: 0.75rem;
-      color: #666;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-weight: 300; font-size: 0.75rem; color: #666;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
     .delete-btn {
-      background: #000;
-      color: #fff;
+      background: #000; color: #fff;
       border: 1px solid #000;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-size: 0.75rem;
-      font-weight: 700;
+      padding: 6px 10px; cursor: pointer;
+      font-size: 0.75rem; font-weight: 700;
       transition: all 0.2s;
     }
 
-    .delete-btn:hover {
-      background: #fff;
-      color: #000;
-    }
+    .delete-btn:hover { background: #fff; color: #000; }
 
     .sidebar-btn {
-      background: #000;
-      color: #fff;
-      border: 1px solid #000;
-      padding: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-      width: 100%;
-      font-family: inherit;
-      font-size: 0.9rem;
+      background: #000; color: #fff;
+      border: 1px solid #000; padding: 12px;
+      font-weight: 700; cursor: pointer;
+      text-align: center; transition: all 0.2s;
+      width: 100%; font-family: inherit; font-size: 0.9rem;
     }
 
-    .sidebar-btn:hover {
-      background: #fff;
-      color: #000;
-    }
+    .sidebar-btn:hover { background: #fff; color: #000; }
 
     .reset-btn {
-      background: transparent;
-      color: #000;
+      background: transparent; color: #000;
+      border: 1px solid #000; padding: 12px;
+      font-weight: 700; cursor: pointer;
+      text-align: center; transition: all 0.2s;
+      width: 100%; font-family: inherit; font-size: 0.9rem;
+    }
+
+    .reset-btn:hover { background: #000; color: #fff; }
+
+    .hint { font-size: 0.72rem; color: #888; line-height: 1.5; }
+
+    .upload-box {
+      border: 1px dashed #000;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .upload-box:hover { background: #f5f5f5; }
+
+    .upload-box input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-box-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    .upload-status {
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 4px;
+      min-height: 18px;
+    }
+
+    .upload-status.success { color: #008000; }
+    .upload-status.error { color: #cc0000; }
+    .upload-status.loading { color: #888; }
+
+    .img-preview {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
       border: 1px solid #000;
+      display: none;
+    }
+
+    .img-preview.visible { display: block; }
+
+    .api-key-section {
+      border: 1px solid #ddd;
       padding: 12px;
+      background: #fafafa;
+    }
+
+    .api-key-section summary {
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-      width: 100%;
-      font-family: inherit;
-      font-size: 0.9rem;
+      letter-spacing: 0.5px;
     }
 
-    .reset-btn:hover {
-      background: #000;
-      color: #fff;
-    }
-
-    .hint {
-      font-size: 0.72rem;
-      color: #888;
-      line-height: 1.4;
-    }
+    .api-key-section .inner { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
   </style>
 </head>
 <body>
@@ -376,7 +348,6 @@
       <h1 id="mainName">YOUR NAME</h1>
       <p class="desc" id="mainDesc">A short description about yourself.</p>
     </div>
-
     <div class="link-list" id="mainLinkList"></div>
   </div>
 
@@ -386,10 +357,31 @@
       <button class="close-btn" id="closeSettingsBtn">&times;</button>
     </div>
 
+    <!-- 프로필 이미지 업로드 -->
     <div class="form-group">
-      <label for="imgUrlInput">프로필 이미지 URL</label>
-      <input type="url" id="imgUrlInput" class="form-control" placeholder="https://...이미지 주소">
-      <span class="hint">imgur, GitHub 등에 업로드한 이미지 URL을 입력하세요.</span>
+      <label>프로필 이미지</label>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+        <img id="imgPreview" class="img-preview" alt="preview">
+        <div class="upload-box" style="flex:1;">
+          <input type="file" id="imgFileInput" accept="image/*">
+          <div class="upload-box-label" id="uploadBoxLabel">파일 선택</div>
+        </div>
+      </div>
+      <div class="upload-status" id="uploadStatus"></div>
+
+      <!-- ImgBB API 키 (접이식) -->
+      <details class="api-key-section" id="apiKeyDetails">
+        <summary>ImgBB API 키 설정 (1회)</summary>
+        <div class="inner">
+          <span class="hint">
+            1. <strong>imgbb.com</strong> 무료 가입<br>
+            2. <strong>api.imgbb.com</strong> 접속 → API 키 복사<br>
+            3. 아래 입력 후 저장
+          </span>
+          <input type="text" id="imgbbKeyInput" class="form-control" placeholder="API 키 붙여넣기">
+          <button type="button" class="sidebar-btn" id="saveImgbbKeyBtn">API 키 저장</button>
+        </div>
+      </details>
     </div>
 
     <div class="form-group">
@@ -419,7 +411,7 @@
       <label>ADD NEW LINK</label>
       <input type="text" id="newLinkTitle" class="form-control" placeholder="TITLE">
       <input type="url" id="newLinkUrl" class="form-control" placeholder="URL (e.g., https://...)">
-      <button type="button" class="sidebar-btn" id="addLinkBtn" style="margin-top: 4px;">ADD LINK</button>
+      <button type="button" class="sidebar-btn" id="addLinkBtn" style="margin-top:4px;">ADD LINK</button>
     </div>
 
     <div class="admin-link-list" id="adminLinkList"></div>
@@ -429,13 +421,13 @@
     <div class="form-group">
       <label for="pwInput">설정 비밀번호 변경</label>
       <input type="password" id="pwInput" class="form-control" placeholder="새 비밀번호 입력">
-      <button type="button" class="sidebar-btn" id="savePwBtn" style="margin-top: 4px;">비밀번호 변경</button>
+      <button type="button" class="sidebar-btn" id="savePwBtn" style="margin-top:4px;">비밀번호 변경</button>
       <span class="hint">초기 비밀번호: 0000</span>
     </div>
 
     <hr>
 
-    <button type="button" class="sidebar-btn" id="copyLinkBtn" style="margin-bottom: 12px;">내 링크 복사</button>
+    <button type="button" class="sidebar-btn" id="copyLinkBtn" style="margin-bottom:12px;">내 링크 복사</button>
     <button type="button" class="reset-btn" id="resetBtn">RESET TO DEFAULT</button>
   </div>
 
@@ -467,10 +459,37 @@
     const getContrastYIQ = (hexcolor) => {
       hexcolor = hexcolor.replace('#', '');
       if (hexcolor.length === 3) hexcolor = hexcolor.split('').map(c => c + c).join('');
-      const r = parseInt(hexcolor.substr(0, 2), 16);
-      const g = parseInt(hexcolor.substr(2, 2), 16);
-      const b = parseInt(hexcolor.substr(4, 2), 16);
-      return ((r * 299 + g * 587 + b * 114) / 1000 >= 128) ? '#000000' : '#ffffff';
+      const r = parseInt(hexcolor.substr(0,2),16);
+      const g = parseInt(hexcolor.substr(2,2),16);
+      const b = parseInt(hexcolor.substr(4,2),16);
+      return ((r*299 + g*587 + b*114) / 1000 >= 128) ? '#000000' : '#ffffff';
+    };
+
+    const fileToBase64 = (file) => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+    // ===== ImgBB Upload =====
+
+    const IMGBB_KEY = 'llImgBBKey';
+
+    const uploadToImgBB = async (file) => {
+      const apiKey = localStorage.getItem(IMGBB_KEY);
+      if (!apiKey) throw new Error('NO_KEY');
+
+      const base64 = await fileToBase64(file);
+      const formData = new FormData();
+      formData.append('key', apiKey);
+      formData.append('image', base64.split(',')[1]);
+
+      const res = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData });
+      if (!res.ok) throw new Error('NETWORK_ERROR');
+      const json = await res.json();
+      if (json.success) return json.data.url;
+      throw new Error('UPLOAD_FAILED');
     };
 
     // ===== Constants =====
@@ -493,7 +512,7 @@
       ]
     };
 
-    // ===== State Loading (URL Hash → localStorage → default) =====
+    // ===== State Loading =====
 
     let state;
     const rawHash = location.hash.slice(1);
@@ -550,7 +569,13 @@
       mainName: document.getElementById('mainName'),
       mainDesc: document.getElementById('mainDesc'),
       mainLinkList: document.getElementById('mainLinkList'),
-      imgUrlInput: document.getElementById('imgUrlInput'),
+      imgFileInput: document.getElementById('imgFileInput'),
+      imgPreview: document.getElementById('imgPreview'),
+      uploadBoxLabel: document.getElementById('uploadBoxLabel'),
+      uploadStatus: document.getElementById('uploadStatus'),
+      imgbbKeyInput: document.getElementById('imgbbKeyInput'),
+      saveImgbbKeyBtn: document.getElementById('saveImgbbKeyBtn'),
+      apiKeyDetails: document.getElementById('apiKeyDetails'),
       nameInput: document.getElementById('nameInput'),
       descInput: document.getElementById('descInput'),
       bgColorPicker: document.getElementById('bgColorPicker'),
@@ -567,6 +592,11 @@
 
     // ===== Render =====
 
+    const setUploadStatus = (msg, type) => {
+      UI.uploadStatus.textContent = msg;
+      UI.uploadStatus.className = 'upload-status' + (type ? ' ' + type : '');
+    };
+
     const renderColors = () => {
       UI.root.style.setProperty('--bg-color', state.bg_color);
       UI.root.style.setProperty('--text-color', getContrastYIQ(state.bg_color));
@@ -581,15 +611,23 @@
         UI.mainImg.src = state.profile_image_url;
         UI.mainImg.style.display = 'block';
         UI.mainPlaceholder.style.display = 'none';
+        UI.imgPreview.src = state.profile_image_url;
+        UI.imgPreview.classList.add('visible');
+        setUploadStatus('이미지 설정됨', 'success');
       } else {
         UI.mainImg.style.display = 'none';
         UI.mainPlaceholder.style.display = 'flex';
+        UI.imgPreview.classList.remove('visible');
       }
       UI.mainName.textContent = state.name;
       UI.mainDesc.textContent = state.desc;
       UI.nameInput.value = state.name;
       UI.descInput.value = state.desc;
-      UI.imgUrlInput.value = state.profile_image_url || '';
+
+      const savedKey = localStorage.getItem(IMGBB_KEY);
+      UI.imgbbKeyInput.value = savedKey || '';
+      if (savedKey) UI.apiKeyDetails.removeAttribute('open');
+      else UI.apiKeyDetails.setAttribute('open', '');
     };
 
     const renderLinks = () => {
@@ -643,7 +681,8 @@
     // ===== Event Listeners =====
 
     const toggleSidebar = (forceClose = false) => {
-      if (forceClose || UI.sidebar.classList.contains('open')) {
+      const isOpen = UI.sidebar.classList.contains('open');
+      if (forceClose || isOpen) {
         UI.sidebar.classList.remove('open');
         UI.overlay.classList.remove('open');
       } else {
@@ -656,21 +695,53 @@
     UI.closeBtn.addEventListener('click', () => toggleSidebar(true));
     UI.overlay.addEventListener('click', () => toggleSidebar(true));
 
-    UI.imgUrlInput.addEventListener('input', (e) => {
-      state.profile_image_url = e.target.value.trim();
-      renderProfile();
-      saveState();
+    // 이미지 업로드
+    UI.imgFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const apiKey = localStorage.getItem(IMGBB_KEY);
+      if (!apiKey) {
+        UI.apiKeyDetails.setAttribute('open', '');
+        setUploadStatus('먼저 아래에서 ImgBB API 키를 저장하세요.', 'error');
+        return;
+      }
+
+      UI.uploadBoxLabel.textContent = file.name;
+      setUploadStatus('업로드 중...', 'loading');
+
+      try {
+        const url = await uploadToImgBB(file);
+        state.profile_image_url = url;
+        renderProfile();
+        saveState();
+        setUploadStatus('업로드 완료! 방문자에게도 표시됩니다.', 'success');
+      } catch(err) {
+        const msg = err.message === 'NO_KEY'
+          ? 'API 키를 먼저 저장하세요.'
+          : '업로드 실패. API 키를 확인하세요.';
+        setUploadStatus(msg, 'error');
+      }
+    });
+
+    // ImgBB API 키 저장
+    UI.saveImgbbKeyBtn.addEventListener('click', () => {
+      const key = UI.imgbbKeyInput.value.trim();
+      if (!key) { alert('API 키를 입력하세요.'); return; }
+      localStorage.setItem(IMGBB_KEY, key);
+      UI.apiKeyDetails.removeAttribute('open');
+      setUploadStatus('API 키 저장 완료. 이제 이미지를 업로드하세요.', 'success');
     });
 
     UI.nameInput.addEventListener('input', (e) => {
       state.name = e.target.value;
-      UI.mainName.textContent = state.name || ' ';
+      UI.mainName.textContent = state.name || ' ';
       saveState();
     });
 
     UI.descInput.addEventListener('input', (e) => {
       state.desc = e.target.value;
-      UI.mainDesc.textContent = state.desc || ' ';
+      UI.mainDesc.textContent = state.desc || ' ';
       saveState();
     });
 
@@ -686,7 +757,7 @@
       saveState();
     });
 
-    // DEL 이벤트 위임 (한 번만 등록)
+    // DEL 이벤트 위임
     UI.adminLinkList.addEventListener('click', (e) => {
       const btn = e.target.closest('.delete-btn');
       if (btn) deleteLink(btn.dataset.id);
@@ -695,10 +766,7 @@
     UI.addLinkBtn.addEventListener('click', () => {
       const title = UI.newLinkTitle.value.trim();
       let url = UI.newLinkUrl.value.trim();
-      if (!title || !url) {
-        alert('제목과 URL을 모두 입력해주세요.');
-        return;
-      }
+      if (!title || !url) { alert('제목과 URL을 모두 입력해주세요.'); return; }
       if (!/^https?:\/\//i.test(url)) url = 'http://' + url;
       state.links.push({ id: Date.now().toString(), title, url });
       saveState();
@@ -732,11 +800,13 @@
         document.execCommand('copy');
         document.body.removeChild(el);
       };
-      (navigator.clipboard ? navigator.clipboard.writeText(url).catch(fallback) : Promise.resolve(fallback()))
-        .then(() => {
-          UI.copyLinkBtn.textContent = '복사 완료!';
-          setTimeout(() => { UI.copyLinkBtn.textContent = '내 링크 복사'; }, 2000);
-        });
+      const copy = navigator.clipboard
+        ? navigator.clipboard.writeText(url).catch(fallback)
+        : Promise.resolve(fallback());
+      copy.then(() => {
+        UI.copyLinkBtn.textContent = '복사 완료!';
+        setTimeout(() => { UI.copyLinkBtn.textContent = '내 링크 복사'; }, 2000);
+      });
     });
 
     UI.resetBtn.addEventListener('click', () => {
