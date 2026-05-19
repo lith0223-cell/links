@@ -14,6 +14,8 @@
       --text-color: #000000;
       --btn-color: #000000;
       --btn-text-color: #ffffff;
+      --btn-radius: 0px;
+      --btn-color2: #666666;
     }
 
     * {
@@ -35,68 +37,27 @@
       padding-top: 80px;
     }
 
-    h1 {
-      font-weight: 700;
-      font-size: 1.75rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
-    }
+    h1 { font-weight: 700; font-size: 1.75rem; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+    p.desc { font-weight: 300; opacity: 0.7; font-size: 1rem; margin-bottom: 2.5rem; word-break: keep-all; }
 
-    p.desc {
-      font-weight: 300;
-      opacity: 0.7;
-      font-size: 1rem;
-      margin-bottom: 2.5rem;
-      word-break: keep-all;
-    }
+    .container { width: 100%; max-width: 420px; padding: 0 20px; position: relative; }
 
-    .container {
-      width: 100%;
-      max-width: 420px;
-      padding: 0 20px;
-      position: relative;
-    }
+    .profile-section { text-align: center; margin-bottom: 2rem; }
 
-    .profile-section {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+    .profile-img-wrapper { width: 120px; height: 120px; margin: 0 auto 1.5rem; position: relative; }
 
-    .profile-img-wrapper {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 1.5rem;
-      position: relative;
-    }
-
-    .profile-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 0;
-      display: none;
-    }
+    .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; display: none; }
 
     .profile-img-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: var(--text-color);
-      color: var(--bg-color);
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background-color: var(--text-color); color: var(--bg-color);
+      font-weight: 700; font-size: 0.8rem; letter-spacing: 1px;
     }
 
-    .link-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 60px;
-    }
+    .link-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 60px; }
 
+    /* ===== Button Base ===== */
     .btn {
       background-color: var(--btn-color);
       color: var(--btn-text-color);
@@ -105,112 +66,112 @@
       cursor: pointer;
       font-size: 1rem;
       font-weight: 700;
-      border-radius: 0;
+      border-radius: var(--btn-radius);
       text-decoration: none;
       display: block;
       text-align: center;
-      transition: filter 0.2s ease, transform 0.1s ease;
+      transition: filter 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
       user-select: none;
+      position: relative;
+      overflow: hidden;
     }
 
     .btn:active { transform: scale(0.98); }
-    .invert-hover:hover { filter: invert(100%); }
 
-    .settings-trigger {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: none;
-      border: none;
-      color: var(--text-color);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 1.5px;
-      z-index: 100;
-      transition: opacity 0.2s;
+    /* 기본 반전 호버 */
+    .btn.fx-invert:hover { filter: invert(100%); }
+
+    /* ===== 그라데이션 ===== */
+    .btn.gradient-on {
+      background: linear-gradient(135deg, var(--btn-color), var(--btn-color2));
+      border-color: transparent;
     }
 
+    /* ===== 애니메이션: 반짝임 ===== */
+    @keyframes btnShimmer {
+      0%   { left: -80%; }
+      100% { left: 120%; }
+    }
+
+    .btn.fx-shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -80%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      animation: btnShimmer 2.2s linear infinite;
+      pointer-events: none;
+    }
+
+    /* ===== 애니메이션: 맥박 ===== */
+    @keyframes btnPulse {
+      0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(0,0,0,0.15); }
+      50%       { transform: scale(1.03); box-shadow: 0 0 0 8px rgba(0,0,0,0); }
+    }
+
+    .btn.fx-pulse { animation: btnPulse 2s ease-in-out infinite; }
+    .btn.fx-pulse:active { transform: scale(0.97); animation: none; }
+
+    /* ===== 애니메이션: 떠오르기 ===== */
+    .btn.fx-float:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+      filter: none;
+    }
+
+    /* ===== Settings Trigger ===== */
+    .settings-trigger {
+      position: fixed; top: 20px; right: 20px;
+      background: none; border: none;
+      color: var(--text-color); font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; letter-spacing: 1.5px; z-index: 100; transition: opacity 0.2s;
+    }
     .settings-trigger:hover { opacity: 0.5; }
 
     .overlay {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.4);
-      z-index: 999;
-      opacity: 0;
-      visibility: hidden;
+      background: rgba(0,0,0,0.4); z-index: 999;
+      opacity: 0; visibility: hidden;
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-
     .overlay.open { opacity: 1; visibility: visible; }
 
     .sidebar {
-      position: fixed;
-      top: 0; right: 0;
-      width: 320px;
-      max-width: 90vw;
-      height: 100vh;
-      background-color: #ffffff;
-      color: #000000;
+      position: fixed; top: 0; right: 0;
+      width: 320px; max-width: 90vw; height: 100vh;
+      background-color: #ffffff; color: #000000;
       border-left: 1px solid #000000;
       padding: 30px 24px;
       transform: translateX(100%);
       transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      z-index: 1000;
-      overflow-y: auto;
+      z-index: 1000; overflow-y: auto;
     }
-
     .sidebar.open { transform: translateX(0); }
 
     .sidebar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid #000;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid #000;
     }
-
     .sidebar-header h2 { font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; }
 
-    .close-btn {
-      background: none; border: none;
-      font-size: 1.5rem; cursor: pointer;
-      font-weight: 300; color: #000; line-height: 1;
-    }
+    .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; font-weight: 300; color: #000; line-height: 1; }
 
-    .form-group {
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
+    .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
     .form-group label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; }
 
     .form-control {
-      padding: 12px;
-      border: 1px solid #000;
-      border-radius: 0;
-      font-family: inherit;
-      font-size: 0.9rem;
-      background: transparent;
-      color: #000;
+      padding: 12px; border: 1px solid #000; border-radius: 0;
+      font-family: inherit; font-size: 0.9rem; background: transparent; color: #000;
     }
-
     .form-control:focus { outline: 2px solid #000; outline-offset: -1px; }
     textarea.form-control { resize: vertical; }
 
     .color-picker-group { display: flex; align-items: center; justify-content: space-between; }
 
-    .color-picker {
-      width: 48px; height: 48px;
-      padding: 0; border: 1px solid #000;
-      cursor: pointer; background: transparent;
-    }
-
+    .color-picker { width: 48px; height: 48px; padding: 0; border: 1px solid #000; cursor: pointer; background: transparent; }
     .color-picker::-webkit-color-swatch-wrapper { padding: 0; }
     .color-picker::-webkit-color-swatch { border: none; }
 
@@ -219,118 +180,57 @@
     .admin-link-list { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
 
     .admin-link-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      border: 1px solid #000;
-      background: #fafafa;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px; border: 1px solid #000; background: #fafafa;
     }
 
     .admin-link-info { flex-grow: 1; overflow: hidden; padding-right: 10px; }
+    .admin-link-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .admin-link-url { font-weight: 300; font-size: 0.75rem; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .admin-link-title {
-      font-weight: 700; font-size: 0.9rem; margin-bottom: 4px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-
-    .admin-link-url {
-      font-weight: 300; font-size: 0.75rem; color: #666;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-
-    .delete-btn {
-      background: #000; color: #fff;
-      border: 1px solid #000;
-      padding: 6px 10px; cursor: pointer;
-      font-size: 0.75rem; font-weight: 700;
-      transition: all 0.2s;
-    }
-
+    .delete-btn { background: #000; color: #fff; border: 1px solid #000; padding: 6px 10px; cursor: pointer; font-size: 0.75rem; font-weight: 700; transition: all 0.2s; }
     .delete-btn:hover { background: #fff; color: #000; }
 
-    .sidebar-btn {
-      background: #000; color: #fff;
-      border: 1px solid #000; padding: 12px;
-      font-weight: 700; cursor: pointer;
-      text-align: center; transition: all 0.2s;
-      width: 100%; font-family: inherit; font-size: 0.9rem;
-    }
-
+    .sidebar-btn { background: #000; color: #fff; border: 1px solid #000; padding: 12px; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.2s; width: 100%; font-family: inherit; font-size: 0.9rem; }
     .sidebar-btn:hover { background: #fff; color: #000; }
 
-    .reset-btn {
-      background: transparent; color: #000;
-      border: 1px solid #000; padding: 12px;
-      font-weight: 700; cursor: pointer;
-      text-align: center; transition: all 0.2s;
-      width: 100%; font-family: inherit; font-size: 0.9rem;
-    }
-
+    .reset-btn { background: transparent; color: #000; border: 1px solid #000; padding: 12px; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.2s; width: 100%; font-family: inherit; font-size: 0.9rem; }
     .reset-btn:hover { background: #000; color: #fff; }
 
     .hint { font-size: 0.72rem; color: #888; line-height: 1.5; }
 
+    /* ===== 스타일 선택 버튼 ===== */
+    .style-options { display: flex; gap: 6px; }
+
+    .style-opt {
+      flex: 1; padding: 10px 4px;
+      border: 1px solid #000; background: #fff;
+      cursor: pointer; font-size: 0.78rem; font-weight: 700;
+      font-family: inherit; transition: all 0.15s; text-align: center;
+    }
+    .style-opt:hover:not(.active) { background: #f0f0f0; }
+    .style-opt.active { background: #000; color: #fff; }
+
+    /* ===== 업로드 UI ===== */
     .upload-box {
-      border: 1px dashed #000;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      position: relative;
-      transition: background 0.2s;
+      border: 1px dashed #000; padding: 20px;
+      text-align: center; cursor: pointer;
+      position: relative; transition: background 0.2s;
     }
-
     .upload-box:hover { background: #f5f5f5; }
+    .upload-box input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .upload-box-label { font-size: 0.85rem; font-weight: 700; pointer-events: none; }
 
-    .upload-box input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-    }
-
-    .upload-box-label {
-      font-size: 0.85rem;
-      font-weight: 700;
-      pointer-events: none;
-    }
-
-    .upload-status {
-      font-size: 0.78rem;
-      font-weight: 700;
-      margin-top: 4px;
-      min-height: 18px;
-    }
-
+    .upload-status { font-size: 0.78rem; font-weight: 700; margin-top: 4px; min-height: 18px; }
     .upload-status.success { color: #008000; }
-    .upload-status.error { color: #cc0000; }
+    .upload-status.error   { color: #cc0000; }
     .upload-status.loading { color: #888; }
 
-    .img-preview {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border: 1px solid #000;
-      display: none;
-    }
-
+    .img-preview { width: 60px; height: 60px; object-fit: cover; border: 1px solid #000; display: none; }
     .img-preview.visible { display: block; }
 
-    .api-key-section {
-      border: 1px solid #ddd;
-      padding: 12px;
-      background: #fafafa;
-    }
-
-    .api-key-section summary {
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.5px;
-    }
-
+    .api-key-section { border: 1px solid #ddd; padding: 12px; background: #fafafa; }
+    .api-key-section summary { font-size: 0.8rem; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; }
     .api-key-section .inner { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
   </style>
 </head>
@@ -357,7 +257,7 @@
       <button class="close-btn" id="closeSettingsBtn">&times;</button>
     </div>
 
-    <!-- 프로필 이미지 업로드 -->
+    <!-- 프로필 이미지 -->
     <div class="form-group">
       <label>프로필 이미지</label>
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
@@ -368,16 +268,10 @@
         </div>
       </div>
       <div class="upload-status" id="uploadStatus"></div>
-
-      <!-- ImgBB API 키 (접이식) -->
       <details class="api-key-section" id="apiKeyDetails">
         <summary>ImgBB API 키 설정 (1회)</summary>
         <div class="inner">
-          <span class="hint">
-            1. <strong>imgbb.com</strong> 무료 가입<br>
-            2. <strong>api.imgbb.com</strong> 접속 → API 키 복사<br>
-            3. 아래 입력 후 저장
-          </span>
+          <span class="hint">1. <strong>imgbb.com</strong> 무료 가입<br>2. <strong>api.imgbb.com</strong>에서 키 발급<br>3. 아래 입력 후 저장</span>
           <input type="text" id="imgbbKeyInput" class="form-control" placeholder="API 키 붙여넣기">
           <button type="button" class="sidebar-btn" id="saveImgbbKeyBtn">API 키 저장</button>
         </div>
@@ -396,17 +290,53 @@
 
     <hr>
 
+    <!-- 색상 -->
     <div class="form-group color-picker-group">
-      <label for="bgColorPicker">BACKGROUND COLOR</label>
+      <label for="bgColorPicker">배경 색상</label>
       <input type="color" id="bgColorPicker" class="color-picker" value="#ffffff">
     </div>
     <div class="form-group color-picker-group">
-      <label for="btnColorPicker">BUTTON COLOR</label>
+      <label for="btnColorPicker">버튼 색상</label>
       <input type="color" id="btnColorPicker" class="color-picker" value="#000000">
     </div>
 
     <hr>
 
+    <!-- 버튼 스타일 -->
+    <div class="form-group">
+      <label>버튼 모양</label>
+      <div class="style-options" id="radiusOptions">
+        <button type="button" class="style-opt active" data-value="0">각진</button>
+        <button type="button" class="style-opt" data-value="8">둥근</button>
+        <button type="button" class="style-opt" data-value="999">알약</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>버튼 효과</label>
+      <div class="style-options" id="effectOptions">
+        <button type="button" class="style-opt active" data-value="invert">기본</button>
+        <button type="button" class="style-opt" data-value="shimmer">반짝임</button>
+        <button type="button" class="style-opt" data-value="pulse">맥박</button>
+        <button type="button" class="style-opt" data-value="float">떠오르기</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>그라데이션</label>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <input type="checkbox" id="gradientToggle" style="width:16px; height:16px; cursor:pointer;">
+        <span style="font-size:0.85rem;">그라데이션 사용</span>
+      </div>
+      <div id="gradientColorRow" class="color-picker-group" style="display:none; margin-top:4px;">
+        <label for="btnColor2Picker">끝 색상</label>
+        <input type="color" id="btnColor2Picker" class="color-picker" value="#666666">
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- 링크 관리 -->
     <div class="form-group">
       <label>ADD NEW LINK</label>
       <input type="text" id="newLinkTitle" class="form-control" placeholder="TITLE">
@@ -472,19 +402,17 @@
       reader.readAsDataURL(file);
     });
 
-    // ===== ImgBB Upload =====
+    // ===== ImgBB =====
 
     const IMGBB_KEY = 'llImgBBKey';
 
     const uploadToImgBB = async (file) => {
       const apiKey = localStorage.getItem(IMGBB_KEY);
       if (!apiKey) throw new Error('NO_KEY');
-
       const base64 = await fileToBase64(file);
       const formData = new FormData();
       formData.append('key', apiKey);
       formData.append('image', base64.split(',')[1]);
-
       const res = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData });
       if (!res.ok) throw new Error('NETWORK_ERROR');
       const json = await res.json();
@@ -506,6 +434,10 @@
       desc: 'A short description about yourself.',
       bg_color: '#ffffff',
       btn_color: '#000000',
+      btn_radius: 0,
+      btn_effect: 'invert',
+      btn_gradient: false,
+      btn_color2: '#666666',
       links: [
         { id: '1', title: 'GITHUB', url: 'https://github.com' },
         { id: '2', title: 'PORTFOLIO', url: '#' }
@@ -580,6 +512,11 @@
       descInput: document.getElementById('descInput'),
       bgColorPicker: document.getElementById('bgColorPicker'),
       btnColorPicker: document.getElementById('btnColorPicker'),
+      radiusOptions: document.getElementById('radiusOptions'),
+      effectOptions: document.getElementById('effectOptions'),
+      gradientToggle: document.getElementById('gradientToggle'),
+      gradientColorRow: document.getElementById('gradientColorRow'),
+      btnColor2Picker: document.getElementById('btnColor2Picker'),
       newLinkTitle: document.getElementById('newLinkTitle'),
       newLinkUrl: document.getElementById('newLinkUrl'),
       addLinkBtn: document.getElementById('addLinkBtn'),
@@ -597,13 +534,24 @@
       UI.uploadStatus.className = 'upload-status' + (type ? ' ' + type : '');
     };
 
+    const syncStyleOptions = (container, activeValue) => {
+      container.querySelectorAll('.style-opt').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.value === String(activeValue));
+      });
+    };
+
     const renderColors = () => {
       UI.root.style.setProperty('--bg-color', state.bg_color);
       UI.root.style.setProperty('--text-color', getContrastYIQ(state.bg_color));
       UI.root.style.setProperty('--btn-color', state.btn_color);
       UI.root.style.setProperty('--btn-text-color', getContrastYIQ(state.btn_color));
+      UI.root.style.setProperty('--btn-radius', state.btn_radius + 'px');
+      UI.root.style.setProperty('--btn-color2', state.btn_color2 || '#666666');
       UI.bgColorPicker.value = state.bg_color;
       UI.btnColorPicker.value = state.btn_color;
+      UI.btnColor2Picker.value = state.btn_color2 || '#666666';
+      UI.gradientToggle.checked = !!state.btn_gradient;
+      UI.gradientColorRow.style.display = state.btn_gradient ? 'flex' : 'none';
     };
 
     const renderProfile = () => {
@@ -623,7 +571,6 @@
       UI.mainDesc.textContent = state.desc;
       UI.nameInput.value = state.name;
       UI.descInput.value = state.desc;
-
       const savedKey = localStorage.getItem(IMGBB_KEY);
       UI.imgbbKeyInput.value = savedKey || '';
       if (savedKey) UI.apiKeyDetails.removeAttribute('open');
@@ -636,7 +583,8 @@
         const a = document.createElement('a');
         a.href = link.url;
         a.target = '_blank';
-        a.className = 'btn invert-hover';
+        a.className = 'btn fx-' + (state.btn_effect || 'invert');
+        if (state.btn_gradient) a.classList.add('gradient-on');
         a.textContent = link.title;
         a.dataset.id = link.id;
         UI.mainLinkList.appendChild(a);
@@ -670,6 +618,9 @@
         item.appendChild(delBtn);
         UI.adminLinkList.appendChild(item);
       });
+
+      syncStyleOptions(UI.radiusOptions, state.btn_radius);
+      syncStyleOptions(UI.effectOptions, state.btn_effect || 'invert');
     };
 
     const renderAll = () => {
@@ -678,7 +629,7 @@
       renderLinks();
     };
 
-    // ===== Event Listeners =====
+    // ===== Events =====
 
     const toggleSidebar = (forceClose = false) => {
       const isOpen = UI.sidebar.classList.contains('open');
@@ -699,17 +650,13 @@
     UI.imgFileInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
-
-      const apiKey = localStorage.getItem(IMGBB_KEY);
-      if (!apiKey) {
+      if (!localStorage.getItem(IMGBB_KEY)) {
         UI.apiKeyDetails.setAttribute('open', '');
-        setUploadStatus('먼저 아래에서 ImgBB API 키를 저장하세요.', 'error');
+        setUploadStatus('먼저 ImgBB API 키를 저장하세요.', 'error');
         return;
       }
-
       UI.uploadBoxLabel.textContent = file.name;
       setUploadStatus('업로드 중...', 'loading');
-
       try {
         const url = await uploadToImgBB(file);
         state.profile_image_url = url;
@@ -717,14 +664,10 @@
         saveState();
         setUploadStatus('업로드 완료! 방문자에게도 표시됩니다.', 'success');
       } catch(err) {
-        const msg = err.message === 'NO_KEY'
-          ? 'API 키를 먼저 저장하세요.'
-          : '업로드 실패. API 키를 확인하세요.';
-        setUploadStatus(msg, 'error');
+        setUploadStatus(err.message === 'NO_KEY' ? 'API 키를 먼저 저장하세요.' : '업로드 실패. API 키를 확인하세요.', 'error');
       }
     });
 
-    // ImgBB API 키 저장
     UI.saveImgbbKeyBtn.addEventListener('click', () => {
       const key = UI.imgbbKeyInput.value.trim();
       if (!key) { alert('API 키를 입력하세요.'); return; }
@@ -733,27 +676,43 @@
       setUploadStatus('API 키 저장 완료. 이제 이미지를 업로드하세요.', 'success');
     });
 
-    UI.nameInput.addEventListener('input', (e) => {
-      state.name = e.target.value;
-      UI.mainName.textContent = state.name || ' ';
+    UI.nameInput.addEventListener('input', (e) => { state.name = e.target.value; UI.mainName.textContent = state.name || ' '; saveState(); });
+    UI.descInput.addEventListener('input', (e) => { state.desc = e.target.value; UI.mainDesc.textContent = state.desc || ' '; saveState(); });
+    UI.bgColorPicker.addEventListener('input', (e) => { state.bg_color = e.target.value; renderColors(); saveState(); });
+    UI.btnColorPicker.addEventListener('input', (e) => { state.btn_color = e.target.value; renderColors(); saveState(); });
+
+    // 버튼 모양
+    UI.radiusOptions.addEventListener('click', (e) => {
+      const btn = e.target.closest('.style-opt');
+      if (!btn) return;
+      state.btn_radius = Number(btn.dataset.value);
+      UI.root.style.setProperty('--btn-radius', state.btn_radius + 'px');
+      syncStyleOptions(UI.radiusOptions, state.btn_radius);
       saveState();
     });
 
-    UI.descInput.addEventListener('input', (e) => {
-      state.desc = e.target.value;
-      UI.mainDesc.textContent = state.desc || ' ';
+    // 버튼 효과
+    UI.effectOptions.addEventListener('click', (e) => {
+      const btn = e.target.closest('.style-opt');
+      if (!btn) return;
+      state.btn_effect = btn.dataset.value;
+      syncStyleOptions(UI.effectOptions, state.btn_effect);
+      renderLinks();
       saveState();
     });
 
-    UI.bgColorPicker.addEventListener('input', (e) => {
-      state.bg_color = e.target.value;
-      renderColors();
+    // 그라데이션 토글
+    UI.gradientToggle.addEventListener('change', (e) => {
+      state.btn_gradient = e.target.checked;
+      UI.gradientColorRow.style.display = state.btn_gradient ? 'flex' : 'none';
+      renderLinks();
       saveState();
     });
 
-    UI.btnColorPicker.addEventListener('input', (e) => {
-      state.btn_color = e.target.value;
-      renderColors();
+    // 그라데이션 끝 색상
+    UI.btnColor2Picker.addEventListener('input', (e) => {
+      state.btn_color2 = e.target.value;
+      UI.root.style.setProperty('--btn-color2', state.btn_color2);
       saveState();
     });
 
@@ -792,25 +751,13 @@
     UI.copyLinkBtn.addEventListener('click', () => {
       const encoded = encodeState(state);
       const url = location.origin + location.pathname + '#' + encoded;
-      const fallback = () => {
-        const el = document.createElement('textarea');
-        el.value = url;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-      };
-      const copy = navigator.clipboard
-        ? navigator.clipboard.writeText(url).catch(fallback)
-        : Promise.resolve(fallback());
-      copy.then(() => {
-        UI.copyLinkBtn.textContent = '복사 완료!';
-        setTimeout(() => { UI.copyLinkBtn.textContent = '내 링크 복사'; }, 2000);
-      });
+      const fallback = () => { const el = document.createElement('textarea'); el.value = url; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); };
+      const copy = navigator.clipboard ? navigator.clipboard.writeText(url).catch(fallback) : Promise.resolve(fallback());
+      copy.then(() => { UI.copyLinkBtn.textContent = '복사 완료!'; setTimeout(() => { UI.copyLinkBtn.textContent = '내 링크 복사'; }, 2000); });
     });
 
     UI.resetBtn.addEventListener('click', () => {
-      if (confirm('모든 설정과 링크가 초기 상태로 초기화됩니다. 정말 진행하시겠습니까?')) {
+      if (confirm('모든 설정이 초기화됩니다. 정말 진행하시겠습니까?')) {
         localStorage.removeItem(DATA_KEY);
         state = JSON.parse(JSON.stringify(defaultState));
         history.replaceState(null, '', location.pathname);
@@ -838,7 +785,6 @@
       }
     });
 
-    // ===== Init =====
     renderAll();
   </script>
 </body>
