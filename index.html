@@ -74,8 +74,7 @@
       transition: opacity 0.3s ease;
     }
 
-    .settings-trigger { position: fixed; top: 20px; right: 20px; background: none; border: none; color: var(--text-color); font-size: 0.85rem; font-weight: 700; cursor: pointer; letter-spacing: 1.5px; z-index: 100; transition: opacity 0.2s; }
-    .settings-trigger:hover { opacity: 0.5; }
+    .settings-trigger { display: none; }
 
     .overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
     .overlay.open { opacity: 1; visibility: visible; }
@@ -411,12 +410,7 @@
       }
     };
 
-    // SETTINGS 버튼: 관리자 기기(토큰 저장됨)에서만 표시
-    const refreshSettingsBtn = () => {
-      const isOwner = !!localStorage.getItem(GH_TOKEN_KEY);
-      UI.openBtn.style.opacity = isOwner ? '1' : '0';
-      UI.openBtn.style.pointerEvents = isOwner ? 'auto' : 'none';
-    };
+    const refreshSettingsBtn = () => {}; // 버튼 완전 히든, 프로필 3번 클릭으로만 접근
 
     // 프로필 이미지 3번 클릭 → 설정 접근 (새 기기용 히든 접근)
     let profileClicks = 0, profileTimer = null;
